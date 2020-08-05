@@ -1,0 +1,19 @@
+#landing-body {
+    background-color: #0e6cff;
+    position: relative;
+    height: 100vh;
+    background-position: center center;
+    background-image: url("../../assets/img/landing-bg.png");
+}
+
+#landing-img-1 {
+    animation: mover 1s infinite alternate;
+    display: inline-block;
+    max-width: 50%;
+    height: auto;
+    margin-right: auto!important;
+}
+
+.hello {
+    display: inline;
+}
