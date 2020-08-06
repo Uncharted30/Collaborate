@@ -20,31 +20,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9339cfca-473b-4ffe-a2b9-fac93a4f4beb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/client.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/img/landing-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/img/landing-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/img/landing-bg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/LoginBox.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/LoginBox.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/landing/Landing.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/landing/LandingPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/serviceWorker.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/setupTests.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/app_bar_logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/AppBar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/AppBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/files/FilePage.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/files/FilesPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../server/.idea/server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoginBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginBox.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoginBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/landing/Landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/landing/Landing.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/landing/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/landing/LandingPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -58,17 +62,24 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/assets/img" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets/img" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -97,7 +108,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1596609468377</updated>
-      <workItem from="1596609469761" duration="747000" />
+      <workItem from="1596609469761" duration="24233000" />
     </task>
     <servers />
   </component>
@@ -116,21 +127,29 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1379" height="217" key="GridCell.Tab.0.bottom" timestamp="1596609837548">
+    <state width="1379" height="217" key="GridCell.Tab.0.bottom" timestamp="1596676512909">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1379" height="217" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596609837548" />
-    <state width="1379" height="217" key="GridCell.Tab.0.center" timestamp="1596609837547">
+    <state width="1379" height="217" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596676512909" />
+    <state width="1379" height="217" key="GridCell.Tab.0.center" timestamp="1596676512908">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1379" height="217" key="GridCell.Tab.0.center/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596609837547" />
-    <state width="1379" height="217" key="GridCell.Tab.0.left" timestamp="1596609837547">
+    <state width="1379" height="217" key="GridCell.Tab.0.center/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596676512908" />
+    <state width="1379" height="217" key="GridCell.Tab.0.left" timestamp="1596676512907">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1379" height="217" key="GridCell.Tab.0.left/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596609837547" />
-    <state width="1379" height="217" key="GridCell.Tab.0.right" timestamp="1596609837548">
+    <state width="1379" height="217" key="GridCell.Tab.0.left/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596676512907" />
+    <state width="1379" height="217" key="GridCell.Tab.0.right" timestamp="1596676512909">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1379" height="217" key="GridCell.Tab.0.right/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596609837548" />
+    <state width="1379" height="217" key="GridCell.Tab.0.right/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596676512909" />
+    <state x="1775" y="80" key="SettingsEditor" timestamp="1596685083754">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1775" y="80" key="SettingsEditor/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596685083754" />
+    <state x="1939" y="203" width="670" height="676" key="search.everywhere.popup" timestamp="1596679797999">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1939" y="203" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596679797999" />
   </component>
 </project>

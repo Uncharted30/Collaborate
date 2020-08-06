@@ -1,0 +1,13 @@
+#app-bar {
+    background-color: white;
+}
+
+#app-bar-logo {
+    max-width: 230px;
+    height: auto;
+}
+
+#tool-bar {
+    display: flex;
+    justify-content: space-between;
+}

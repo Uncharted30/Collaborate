@@ -1,0 +1,31 @@
+#file-create-section {
+    height: 300px;
+    background-color: rgb(241, 243, 244);
+    display: flex;
+    justify-content: center;
+    margin-top: 64px;
+}
+
+#recent-file-section {
+    height: 3000px;
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (min-width: 1201px) {
+    #file-create-div, #recent-file-div {width: 60%}
+}
+
+@media screen and (max-width: 1200px) {
+    #file-create-div, #recent-file-div {width: 60%}
+}
+
+@media screen and (max-width: 901px) {
+    #file-create-div {width: 80%}
+    #recent-file-div {width: 80%}
+}
+
+@media screen and (max-width: 500px) {
+    #file-create-div {width: 100%}
+    #recent-file-div {width: 100%}
+}
