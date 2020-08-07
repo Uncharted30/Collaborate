@@ -1,0 +1,26 @@
+#file-card {
+    width: 133px;
+    height: 169px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-type {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.md-icon {
+    max-width: 60px;
+}
+
+.code-icon {
+    max-width: 50px;
+}
+
+.file-card-div {
+    margin: 0 8px;
+}

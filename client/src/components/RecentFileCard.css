@@ -1,0 +1,37 @@
+.recent-file-card {
+    width: 208px;
+    height: 338px;
+    z-index: 1;
+    display: inline-block;
+}
+
+#card-cover {
+    width: 100%;
+    height: 263px;
+    /*border: 1px solid #f0f0f0;*/
+    border-right: 1px solid #f0f0f0;
+    border-left: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.file-card-col {
+    display: flex;
+    justify-content: center;
+}
+
+.recent-file-card .ant-card-body {
+    padding-top: 14px;
+    padding-bottom: 0;
+}
+
+.file-info-row {
+    text-align: center;
+}
+
+.filename-row {
+    font-weight: 600;
+}
+
+.date-row {
+    font-size: 12px;
+}

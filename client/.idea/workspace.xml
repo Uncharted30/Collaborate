@@ -20,22 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9339cfca-473b-4ffe-a2b9-fac93a4f4beb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/img/app_bar_logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/img/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/AppBar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/AppBar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/files/FilePage.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/files/FilesPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../server/.idea/server.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/code-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/markdown-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/FileCard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/FileCard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/RecentFileCard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/RecentFileCard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginBox.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/landing/Landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/landing/Landing.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/landing/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/landing/LandingPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/files/FilePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/files/FilePage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/files/FilesPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/files/FilesPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +47,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1ffW8bI0zkxouzh7hCVGaZs3Ae8" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -76,6 +71,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -108,7 +104,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1596609468377</updated>
-      <workItem from="1596609469761" duration="24233000" />
+      <workItem from="1596609469761" duration="36379000" />
     </task>
     <servers />
   </component>
@@ -127,29 +123,29 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1379" height="217" key="GridCell.Tab.0.bottom" timestamp="1596676512909">
+    <state width="1379" height="217" key="GridCell.Tab.0.bottom" timestamp="1596773871452">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1379" height="217" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596676512909" />
-    <state width="1379" height="217" key="GridCell.Tab.0.center" timestamp="1596676512908">
+    <state width="1379" height="217" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596773871452" />
+    <state width="1379" height="217" key="GridCell.Tab.0.center" timestamp="1596773871451">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1379" height="217" key="GridCell.Tab.0.center/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596676512908" />
-    <state width="1379" height="217" key="GridCell.Tab.0.left" timestamp="1596676512907">
+    <state width="1379" height="217" key="GridCell.Tab.0.center/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596773871451" />
+    <state width="1379" height="217" key="GridCell.Tab.0.left" timestamp="1596773871450">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1379" height="217" key="GridCell.Tab.0.left/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596676512907" />
-    <state width="1379" height="217" key="GridCell.Tab.0.right" timestamp="1596676512909">
+    <state width="1379" height="217" key="GridCell.Tab.0.left/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596773871450" />
+    <state width="1379" height="217" key="GridCell.Tab.0.right" timestamp="1596773871452">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1379" height="217" key="GridCell.Tab.0.right/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596676512909" />
+    <state width="1379" height="217" key="GridCell.Tab.0.right/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596773871452" />
     <state x="1775" y="80" key="SettingsEditor" timestamp="1596685083754">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
     <state x="1775" y="80" key="SettingsEditor/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596685083754" />
-    <state x="1939" y="203" width="670" height="676" key="search.everywhere.popup" timestamp="1596679797999">
+    <state x="1939" y="203" width="670" height="676" key="search.everywhere.popup" timestamp="1596775245832">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state x="1939" y="203" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596679797999" />
+    <state x="1939" y="203" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596775245832" />
   </component>
 </project>

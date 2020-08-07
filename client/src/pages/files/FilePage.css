@@ -12,6 +12,30 @@
     justify-content: center;
 }
 
+.file-section-title {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 64px;
+    font-family: 'Montserrat', sans-serif;
+    height: 64px;
+    color: black;
+}
+
+#filter-col {
+    text-align: right;
+}
+
+.filter-div {
+    margin-left: 8px;
+    display: inline;
+}
+
+.recent-files-row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
 @media screen and (min-width: 1201px) {
     #file-create-div, #recent-file-div {width: 60%}
 }
