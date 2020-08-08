@@ -1,8 +1,6 @@
 .recent-file-card {
     width: 208px;
     height: 338px;
-    z-index: 1;
-    display: inline-block;
 }
 
 #card-cover {
@@ -34,4 +32,10 @@
 
 .date-row {
     font-size: 12px;
+}
+
+.more-icon-col {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }

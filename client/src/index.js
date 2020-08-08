@@ -4,13 +4,14 @@ import './index.css';
 import 'antd/dist/antd.css';
 // import {LandingPage} from './pages/landing/LandingPage';
 import MenuAppBar from './components/AppBar'
-import FilesPage from "./pages/files/FilesPage";
+// import FilesPage from "./pages/files/FilesPage";
 import * as serviceWorker from './serviceWorker';
+import EditPage from "./pages/edit/EditPage";
 
 ReactDOM.render(
-        <div>
+        <div style={{height: '100%'}}>
             <MenuAppBar />
-            <FilesPage/>
+            <EditPage/>
         </div>,
   document.getElementById('root')
 );

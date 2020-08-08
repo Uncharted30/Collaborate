@@ -4,7 +4,7 @@ import "./FilePage.css"
 import FileCard from "../../components/FileCard"
 import RecentFileCard from "../../components/RecentFileCard";
 
-const recents = [<RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>]
+const recents = [<RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>]
 
 class FilesPage extends React.Component {
     render() {
