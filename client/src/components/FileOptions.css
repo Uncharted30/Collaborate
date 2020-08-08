@@ -1,0 +1,11 @@
+.file-option-menu {
+    height: 39px;
+    display: flex;
+    align-items: center;
+    border-bottom: rgba(0, 0, 0, 0.08) solid 1px;
+
+}
+
+.file-option-menu li:hover {
+    border: 0 !important;
+}

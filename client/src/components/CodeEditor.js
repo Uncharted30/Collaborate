@@ -6,15 +6,18 @@ import "ace-builds/src-noconflict/theme-github";
 import './CodeEditor.css'
 import {Input, Row, Select} from "antd";
 import {Divider} from "@material-ui/core";
+import CodeSelector from "./CodeSelector";
+import ThemeSelector from "./ThemeSelector";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import FileOptions from "./FileOptions";
 
 const { Option } = Select;
-
 
 class CodeEditor extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-
         this.onChange = this.onChange.bind(this);
     }
 
@@ -27,27 +30,14 @@ class CodeEditor extends React.Component {
             <div id='editor-div'>
                 <Row id='editor-info-row'>
                     <Input defaultValue="Filename" bordered={false} style={{width: 180}} className='filename-input'/>
-                    <Select defaultValue="java" style={{ width: 95 }} bordered={false}>
-                        <Option value="java">Java</Option>
-                        <Option value="c_c++">C/C++</Option>
-                        <Option value="python">Python</Option>
-                        <Option value="javascript">JavaScript</Option>
-                        <Option value="golang">Go</Option>
-                        <Option value="swift">Swift</Option>
-                        <Option value="scala">Scala</Option>
-                        <Option value='css'>CSS</Option>
-                        <Option value='html'>HTML</Option>
-                        <Option value='MySQL'>MySQL</Option>
-                    </Select>
-                    <Select defaultValue="github" style={{ width: 100 }} bordered={false}>
-                        <Option value="github">GitHub</Option>
-                        <Option value="eclipse">Eclipse</Option>
-                        <Option value="twilight">Twilight</Option>
-                        <Option value="xcode">XCode</Option>
-                        <Option value="monokai">Monokai</Option>
-                    </Select>
+                    <Divider orientation="vertical" flexItem style={{height:39}}/>
+                    <FileOptions/>
+                    <Divider orientation="vertical" flexItem style={{height:39}}/>
+                    <ThemeSelector/>
+                    <Divider orientation="vertical" flexItem style={{height:39}}/>
+                    <CodeSelector/>
+                    <Divider orientation="vertical" flexItem style={{height:39}}/>
                 </Row>
-                <Divider light/>
                 <AceEditor
                     mode="java"
                     theme="github"
