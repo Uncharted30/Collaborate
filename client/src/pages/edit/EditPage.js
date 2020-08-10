@@ -1,6 +1,7 @@
 import React from 'react';
 import './EditPage.css'
 import CodeEditor from "../../components/CodeEditor";
+import MDEditor from "../../components/MDEditor";
 
 class EditPage extends React.Component {
 
@@ -17,7 +18,8 @@ class EditPage extends React.Component {
     render() {
         return (
             <div id='edit-page-editor-div'>
-                <CodeEditor id='editor'/>
+                {/*<CodeEditor id='editor'/>*/}
+                <MDEditor/>
             </div>
         );
     }

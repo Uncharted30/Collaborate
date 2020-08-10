@@ -2,45 +2,69 @@ import React from 'react';
 
 import AceEditor from 'react-ace';
 import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/mode-c_cpp";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-golang";
+import "ace-builds/src-noconflict/mode-swift";
+import "ace-builds/src-noconflict/mode-css";
+import "ace-builds/src-noconflict/mode-html";
+import "ace-builds/src-noconflict/mode-mysql";
 import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-eclipse";
+import "ace-builds/src-noconflict/theme-twilight";
+import "ace-builds/src-noconflict/theme-xcode";
+import "ace-builds/src-noconflict/theme-monokai";
 import './CodeEditor.css'
-import {Input, Row, Select} from "antd";
+import {Row} from "antd";
 import {Divider} from "@material-ui/core";
 import CodeSelector from "./CodeSelector";
 import ThemeSelector from "./ThemeSelector";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import FileOptions from "./FileOptions";
-
-const { Option } = Select;
 
 class CodeEditor extends React.Component {
 
     constructor(props, context) {
         super(props, context);
         this.onChange = this.onChange.bind(this);
+        this.state = {
+            mode: 'java',
+            theme: 'github'
+        }
     }
 
     onChange(newValue) {
         console.log('change', newValue);
     }
 
+    changeMode = (mode) => {
+        this.setState({
+            mode: mode
+        })
+    }
+
+    changeTheme = (theme) => {
+        this.setState({
+            theme: theme
+        })
+    }
+
     render() {
         return (
             <div id='editor-div'>
                 <Row id='editor-info-row'>
-                    <Input defaultValue="Filename" bordered={false} style={{width: 180}} className='filename-input'/>
-                    <Divider orientation="vertical" flexItem style={{height:39}}/>
-                    <FileOptions/>
-                    <Divider orientation="vertical" flexItem style={{height:39}}/>
-                    <ThemeSelector/>
-                    <Divider orientation="vertical" flexItem style={{height:39}}/>
-                    <CodeSelector/>
-                    <Divider orientation="vertical" flexItem style={{height:39}}/>
+                    <div>
+                        <FileOptions/>
+                    </div>
+                    <div className='editor-info-div'>
+                        <ThemeSelector changeTheme={this.changeTheme}/>
+                        <Divider orientation="vertical" flexItem style={{height:39}}/>
+                        <CodeSelector changeMode={this.changeMode}/>
+                    </div>
                 </Row>
                 <AceEditor
-                    mode="java"
-                    theme="github"
+                    mode={this.state.mode}
+                    theme={this.state.theme}
                     onChange={this.onChange}
                     name="UNIQUE_ID_OF_DIV"
                     editorProps={{

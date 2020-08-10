@@ -1,11 +1,27 @@
 .file-option-menu {
-    height: 39px;
-    display: flex;
-    align-items: center;
-    border-bottom: rgba(0, 0, 0, 0.08) solid 1px;
-
+    margin-bottom: 0;
 }
 
-.file-option-menu li:hover {
-    border: 0 !important;
+.option-dropdown {
+    width: 75px;
+    font-size: 14px;
+    padding-left: 11px;
+    padding-right: 11px;
+    color: inherit;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.option-dropdown:hover {
+    color: inherit;
+}
+
+.filename-input:hover {
+    border: #0e6cff solid 1px;
+}
+
+.filename-input:focus {
+    background-color: #fff;
+    border: #0e6cff solid 1px;
 }
