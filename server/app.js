@@ -4,7 +4,9 @@ const indexRouter = require("./routes/index");
 const userRouter = require("./routes/users")
 const mongoose = require("mongoose");
 
-const atlasUrl = "mongodb+srv://collabs_1:0QiAuXGlkuUPvCNM@collabs.w3ihy.mongodb.net/collaborate?retryWrites=true&w=majority";
+require('dotenv').config()
+
+const atlasUrl = process.env.DB_URL;
 
 mongoose.connect(atlasUrl).then(() => console.log("Connected to database."));
 
