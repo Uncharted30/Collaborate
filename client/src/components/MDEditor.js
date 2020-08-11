@@ -26,9 +26,10 @@ class MDEditor extends React.Component {
                         <FileOptions/>
                     </div>
                 </Row>
-                <MarkdownEditor className='custom-md-editor'
+                <MarkdownEditor
                     value={this.state.markdown}
                     onChange={this.updateMarkdown}
+                    height={'calc(100vh - 158npx)'}
                 />
             </div>
         );

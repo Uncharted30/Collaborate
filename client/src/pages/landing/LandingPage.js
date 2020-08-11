@@ -3,12 +3,36 @@ import "./Landing.css"
 import landingImg1 from "../../assets/img/landing-1.png"
 import landingImg2 from "../../assets/img/landing-2.png"
 import {Row, Col} from "antd";
-import LoginBox from "../../components/LoginBox";
+import LoginBox from "../../components/SignInBox";
 import Logo from "../../assets/img/logo.svg"
+import SignIn from "../../components/SignInBox";
+import SignUp from "../../components/SignUpBox";
 
 // import {LoginBox} from "../../components/LoginBox"
 
 class LandingPage extends React.Component {
+    switchToSignUp = () => {
+        this.setState({
+            show: this.signUp
+        })
+    }
+
+    switchToSignIn = () => {
+        this.setState({
+            show: this.signIn
+        })
+    }
+
+    signIn = <SignIn switchToSignUp={this.switchToSignUp}/>
+    signUp = <SignUp switchToSignIn={this.switchToSignIn}/>
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: this.signIn
+        }
+    }
+
     render() {
         return (
             <div id="landing-body">
@@ -22,7 +46,9 @@ class LandingPage extends React.Component {
                     <Col span={12}>
                         <Row>
                             <Col span={24} id="login-box-col">
-                                <LoginBox/>
+                                <div className='flipper'>
+                                    {this.state.show}
+                                </div>
                             </Col>
                         </Row>
                     </Col>

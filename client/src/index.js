@@ -2,16 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'antd/dist/antd.css';
-// import {LandingPage} from './pages/landing/LandingPage';
+import {LandingPage} from './pages/landing/LandingPage';
 import MenuAppBar from './components/AppBar'
 // import FilesPage from "./pages/files/FilesPage";
 import * as serviceWorker from './serviceWorker';
 import EditPage from "./pages/edit/EditPage";
+import AccountPage from "./pages/account/AccountPage";
 
 ReactDOM.render(
         <div style={{height: '100%'}}>
             <MenuAppBar />
-            <EditPage/>
+            {/*<EditPage/>*/}
+            {/*<LandingPage/>*/}
+            <AccountPage/>
         </div>,
   document.getElementById('root')
 );
