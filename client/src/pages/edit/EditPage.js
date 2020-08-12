@@ -18,8 +18,8 @@ class EditPage extends React.Component {
     render() {
         return (
             <div id='edit-page-editor-div'>
-                {/*<CodeEditor id='editor'/>*/}
-                <MDEditor/>
+                <CodeEditor id='editor'/>
+                {/*<MDEditor/>*/}
             </div>
         );
     }

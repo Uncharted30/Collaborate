@@ -3,7 +3,6 @@ import "./Landing.css"
 import landingImg1 from "../../assets/img/landing-1.png"
 import landingImg2 from "../../assets/img/landing-2.png"
 import {Row, Col} from "antd";
-import LoginBox from "../../components/SignInBox";
 import Logo from "../../assets/img/logo.svg"
 import SignIn from "../../components/SignInBox";
 import SignUp from "../../components/SignUpBox";

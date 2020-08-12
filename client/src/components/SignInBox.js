@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,6 +10,9 @@ import Container from '@material-ui/core/Container';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import "./SignInBox.css"
+import {validateEmail} from '../utils/utils'
+import {axiosInstance as axios} from "../utils/axios";
+import {message} from 'antd'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -37,6 +37,44 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn(props) {
     const classes = useStyles();
 
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+
+    const emailOnBlur = (e) => {
+        if (e.target.value === '') {
+            setEmailError('Please enter your email!')
+            return
+        }
+        let res = validateEmail(e.target.value)
+        if (!res) {
+            setEmailError('Invalid email format!')
+        } else {
+            setEmailError('')
+        }
+    }
+
+    const  passwordOnBlur = (e) => {
+        if (e.target.value.length < 8) {
+            setPasswordError('Invalid password!')
+        } else {
+            setPasswordError('')
+        }
+    }
+
+    const handleSignIn = (e) => {
+        e.preventDefault()
+        if (emailError !== '' || passwordError !== '') {
+            message.error("Please enter correct email and password.")
+            return
+        }
+        let form = e.target
+        axios.post('/api/user/sign_in', {
+            email: form.email.value,
+            password: form.password.value
+        }).then((res) => console.log(res)).catch((err) => {
+            message.error("Error signing you in, please try again later. " + err)
+        })
+    }
     return (
         <Card className={classes.root} id="sign-in-card" variant="outlined">
             <CardContent>
@@ -48,7 +86,7 @@ export default function SignIn(props) {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <form className={classes.form} noValidate>
+                        <form className={classes.form} noValidate onSubmit={handleSignIn}>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -60,6 +98,9 @@ export default function SignIn(props) {
                                 autoComplete="email"
                                 autoFocus
                                 size='small'
+                                error={emailError!==''}
+                                helperText={emailError}
+                                onBlur={emailOnBlur}
                             />
                             <TextField
                                 variant="outlined"
@@ -72,10 +113,9 @@ export default function SignIn(props) {
                                 id="password"
                                 size='small'
                                 autoComplete="current-password"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
+                                error={passwordError !== ''}
+                                helperText={passwordError}
+                                onBlur={passwordOnBlur}
                             />
                             <Button
                                 type="submit"

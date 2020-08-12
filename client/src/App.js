@@ -1,25 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {LandingPage} from "./pages/landing/LandingPage";
+import MenuAppBar from './components/AppBar'
+import FilesPage from "./pages/files/FilesPage";
+import AccountPage from "./pages/account/AccountPage";
+import EditPage from "./pages/edit/EditPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Hi
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path='/'>
+            <LandingPage/>
+          </Route>
+          <Route path='/'>
+            <BrowserRouter>
+              <MenuAppBar/>
+              <Route path='/files'>
+                <FilesPage/>
+              </Route>
+              <Route path='/edit/:id'>
+                <EditPage/>
+              </Route>
+              <Route path='/account'>
+                <AccountPage/>
+              </Route>
+            </BrowserRouter>
+          </Route>
+        </Switch>
+      </BrowserRouter>
   );
 }
 

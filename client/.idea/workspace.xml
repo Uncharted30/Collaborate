@@ -20,16 +20,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9339cfca-473b-4ffe-a2b9-fac93a4f4beb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/SignUpBox.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/SignUpBox.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/account/AccountPage.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/account/AccountPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/axios.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SignInBox.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SignInBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MDEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MDEditor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SignInBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SignInBox.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/edit/EditPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/edit/EditPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/landing/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/landing/LandingPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/setupTests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/service/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server/service/userService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +46,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -75,14 +82,14 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/pages/edit" />
       <recent name="$PROJECT_DIR$/src/assets/img" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">
@@ -111,7 +118,7 @@
       <option name="presentableId" value="Default" />
       <updated>1596609468377</updated>
       <workItem from="1596609469761" duration="65119000" />
-      <workItem from="1597035692362" duration="13953000" />
+      <workItem from="1597035692362" duration="25814000" />
     </task>
     <servers />
   </component>
@@ -139,26 +146,26 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="572" y="195" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1920.1057@0.23.1920.1057" timestamp="1596859909354" />
-    <state width="1379" height="217" key="GridCell.Tab.0.bottom" timestamp="1597097492194">
+    <state width="1379" height="217" key="GridCell.Tab.0.bottom" timestamp="1597205701427">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1379" height="217" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596868091548" />
-    <state width="1379" height="217" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1597097492194" />
-    <state width="1379" height="217" key="GridCell.Tab.0.center" timestamp="1597097492194">
+    <state width="1379" height="217" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1597205701427" />
+    <state width="1379" height="217" key="GridCell.Tab.0.center" timestamp="1597205701426">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1379" height="217" key="GridCell.Tab.0.center/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596868091546" />
-    <state width="1379" height="217" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1597097492194" />
-    <state width="1379" height="217" key="GridCell.Tab.0.left" timestamp="1597097492193">
+    <state width="1379" height="217" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1597205701426" />
+    <state width="1379" height="217" key="GridCell.Tab.0.left" timestamp="1597205701425">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1379" height="217" key="GridCell.Tab.0.left/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596868091541" />
-    <state width="1379" height="217" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1597097492193" />
-    <state width="1379" height="217" key="GridCell.Tab.0.right" timestamp="1597097492194">
+    <state width="1379" height="217" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1597205701425" />
+    <state width="1379" height="217" key="GridCell.Tab.0.right" timestamp="1597205701426">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1379" height="217" key="GridCell.Tab.0.right/0.23.1440.877/1440.23.1920.1057@1440.23.1920.1057" timestamp="1596868091547" />
-    <state width="1379" height="217" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1597097492194" />
+    <state width="1379" height="217" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1597205701426" />
     <state x="1775" y="80" key="SettingsEditor" timestamp="1596685083754">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
