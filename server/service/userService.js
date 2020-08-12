@@ -37,7 +37,7 @@ let updateUser = function(user, token) {
         try {
             jwt.verify(token, publicKey);
         } catch (err) {
-            reject("Not authorized!");
+            reject("Unauthorized!");
         }
 
         User.findOne({email: user.email}, function (err, dbUser) {
@@ -75,7 +75,7 @@ let userSignIn = (user) => {
                         if (result) {
                             console.log(privateKey)
                             let token = jwt.sign({
-                                username: user.username
+                                email: user.email
                             }, privateKey, { algorithm: 'RS256', expiresIn: '30d'})
                             resolve(token)
                         } else {
@@ -90,8 +90,28 @@ let userSignIn = (user) => {
     })
 }
 
+let getUserInfo = (token) => {
+    return new Promise((resolve, reject) => {
+        try {
+            let decoded = jwt.verify(token, publicKey);
+            User.findOne({
+                email: decoded.email
+            }, (err, user) => {
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject("User not found!");
+                }
+            })
+        } catch {
+            reject("Unauthorized!");
+        }
+    })
+}
+
 module.exports = {
     createUser: createUser,
     updateUser: updateUser,
-    userSignIn: userSignIn
+    userSignIn: userSignIn,
+    getUserInfo, getUserInfo
 }

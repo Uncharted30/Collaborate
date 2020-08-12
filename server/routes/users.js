@@ -35,14 +35,16 @@ router.post('/sign_in', function (req, res) {
     password: req.body.password
   })
 
+  console.log(user)
+
   userService.userSignIn(user).then((token) => {
     res.cookie('token', token).send({
       status: 200,
       msg: "succeed"
     })
   }).catch((err) => {
-    res.status(400).send({
-      status: 400,
+    res.send({
+      status: 200,
       msg:err
     })
   })
