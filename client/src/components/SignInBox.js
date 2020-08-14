@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import "./SignInBox.css"
-import {validateEmail} from '../utils/utils'
+import {validateEmail, validatePassword} from '../utils/utils'
 import {axiosInstance as axios} from "../utils/axios";
 import {message} from 'antd'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -41,24 +42,13 @@ export default function SignIn(props) {
     const [passwordError, setPasswordError] = useState('')
 
     const emailOnBlur = (e) => {
-        if (e.target.value === '') {
-            setEmailError('Please enter your email!')
-            return
-        }
-        let res = validateEmail(e.target.value)
-        if (!res) {
-            setEmailError('Invalid email format!')
-        } else {
-            setEmailError('')
-        }
+        setEmailError(validateEmail(e.target.value))
     }
 
-    const  passwordOnBlur = (e) => {
-        if (e.target.value.length < 8) {
-            setPasswordError('Invalid password!')
-        } else {
-            setPasswordError('')
-        }
+    let history = useHistory()
+
+    const passwordOnBlur = (e) => {
+        setPasswordError(validatePassword(e.target.value))
     }
 
     const handleSignIn = (e) => {
@@ -71,7 +61,15 @@ export default function SignIn(props) {
         axios.post('/api/user/sign_in', {
             email: form.email.value,
             password: form.password.value
-        }).then((res) => console.log(res)).catch((err) => {
+        }).then(
+            (res) => {
+                if (res.data.msg === 'succeed') {
+                    history.push('/files')
+                } else {
+                    message.error(res.data.msg)
+                }
+            }
+        ).catch((err) => {
             message.error("Error signing you in, please try again later. " + err)
         })
     }
@@ -79,7 +77,7 @@ export default function SignIn(props) {
         <Card className={classes.root} id="sign-in-card" variant="outlined">
             <CardContent>
                 <Container component="main" maxWidth="xs">
-                    <CssBaseline />
+                    <CssBaseline/>
                     <div className={classes.paper + ' sign-in-form-div'}>
                         <Avatar className={classes.avatar}>
                         </Avatar>
@@ -98,7 +96,7 @@ export default function SignIn(props) {
                                 autoComplete="email"
                                 autoFocus
                                 size='small'
-                                error={emailError!==''}
+                                error={emailError !== ''}
                                 helperText={emailError}
                                 onBlur={emailOnBlur}
                             />

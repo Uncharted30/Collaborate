@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,10 @@ import Container from '@material-ui/core/Container';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import "./SignUpBox.css"
+import { useHistory } from "react-router-dom";
+import {validateEmail, validatePassword} from "../utils/utils";
+import {axiosInstance as axios} from '../utils/axios'
+import {message} from "antd";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,6 +37,51 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp(props) {
     const classes = useStyles();
+    const history = useHistory();
+
+    const [passwordError, setPasswordError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [firstNameError, setFirstNameError] = useState('');
+    const [lastNameError, setLastNameError] = useState('');
+
+    const onPasswordBlur = (e) => {
+        setPasswordError(validatePassword(e.target.value))
+    }
+
+    const onEmailBlur = (e) => {
+        setEmailError(validateEmail(e.target.value))
+    }
+
+    const onFirstNameBlur = (e) => {
+        if (e.target.value === '') setFirstNameError('First name could not be empty.');
+        else setFirstNameError('')
+    }
+
+    const onLastNameBlur = (e) => {
+        if (e.target.value === '') setLastNameError('Last name could not br empty.');
+        else setFirstNameError('')
+    }
+
+    const handleSignUp = (e) => {
+        e.preventDefault()
+        if (emailError !== '' || passwordError !== '' || firstNameError !== '' || lastNameError !== '') {
+            message.error("Please check warnings before you submit.")
+            return
+        }
+
+        let form = e.target
+
+        axios.post('/api/user/new', {
+            email: form.email.value,
+            firstName: form.firstName.value,
+            lastName: form.lastName.value,
+            password: form.password.value
+        }).then((res) => {
+            history.push('/files')
+        }).catch((err) => {
+            message.error("Error signing up, please try again later. " + err)
+        })
+    }
 
     return (
         <Card className={classes.root} id="sign-up-card" variant="outlined">
@@ -45,27 +94,33 @@ export default function SignUp(props) {
                         <Typography component="h1" variant="h5">
                             Sign Up
                         </Typography>
-                        <form className={classes.form} noValidate>
+                        <form className={classes.form} noValidate onSubmit={handleSignUp}>
                             <TextField
                                 variant="outlined"
                                 margin="dense"
                                 required
                                 fullWidth
-                                id="first-name"
+                                id="firstName"
                                 label="First Name"
-                                name="first-name"
+                                name="firstName"
                                 autoFocus
                                 size='small'
+                                onBlur={onFirstNameBlur}
+                                error={firstNameError !== ''}
+                                helperText={firstNameError}
                             />
                             <TextField
                                 variant="outlined"
                                 margin="dense"
                                 required
                                 fullWidth
-                                id="last-name"
+                                id="lastName"
                                 label="Last Name"
-                                name="last-name"
+                                name="lastName"
                                 size='small'
+                                onBlur={onLastNameBlur}
+                                error={lastNameError !== ''}
+                                helperText={lastNameError}
                             />
                             <TextField
                                 variant="outlined"
@@ -77,6 +132,9 @@ export default function SignUp(props) {
                                 name="email"
                                 autoComplete="email"
                                 size='small'
+                                onBlur={onEmailBlur}
+                                error={emailError !== ''}
+                                helperText={emailError}
                             />
                             <TextField
                                 variant="outlined"
@@ -89,6 +147,9 @@ export default function SignUp(props) {
                                 id="password"
                                 autoComplete="current-password"
                                 size='small'
+                                onBlur={onPasswordBlur}
+                                error={passwordError !== ''}
+                                helperText={passwordError}
                             />
                             <Button
                                 type="submit"

@@ -1,6 +1,8 @@
 .recent-file-card {
     width: 208px;
     height: 338px;
+    margin: 10px;
+
 }
 
 #card-cover {
@@ -10,6 +12,9 @@
     border-right: 1px solid #f0f0f0;
     border-left: 1px solid #f0f0f0;
     border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .file-card-col {

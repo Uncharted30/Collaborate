@@ -29,7 +29,7 @@ class MDEditor extends React.Component {
                 <MarkdownEditor
                     value={this.state.markdown}
                     onChange={this.updateMarkdown}
-                    height={'calc(100vh - 158npx)'}
+                    height={'calc(100vh - 200px)'}
                 />
             </div>
         );

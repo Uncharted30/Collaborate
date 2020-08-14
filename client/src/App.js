@@ -20,7 +20,7 @@ function App() {
               <Route path='/files'>
                 <FilesPage/>
               </Route>
-              <Route path='/edit/:id'>
+              <Route path='/edit/:type/:id'>
                 <EditPage/>
               </Route>
               <Route path='/account'>

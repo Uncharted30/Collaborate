@@ -1,12 +1,41 @@
 import React from "react";
-import {Row, Col, Select} from "antd"
+import {Row, Col, Select, message} from "antd"
 import "./FilePage.css"
 import FileCard from "../../components/FileCard"
 import RecentFileCard from "../../components/RecentFileCard";
+import {withRouter} from "react-router-dom";
+import {axiosInstance as axios} from "../../utils/axios";
 
 const recents = [<RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>]
 
 class FilesPage extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            docs:[]
+        }
+    }
+
+    fetchData = () => {
+        axios.get('/api/document').then(res => {
+            if (res.data.msg === 'succeed') {
+                console.log(res)
+                this.setState({
+                    docs: res.data.docs
+                })
+            } else {
+                message.error("Error fetching files. " + res.data.msg)
+            }
+        }).catch(e => {
+            message.error("Error fetching files. " + e)
+        })
+    }
+
+    componentDidMount() {
+        this.fetchData()
+    }
+
     render() {
         const {Option} = Select
         return (
@@ -50,7 +79,9 @@ class FilesPage extends React.Component {
                             </Col>
                         </Row>
                         <Row className='recent-files-row'>
-                            {recents}
+                            {this.state.docs.map((doc) => {
+                                return <RecentFileCard doc={doc}/>
+                            })}
                         </Row>
                     </div>
                 </Row>
@@ -59,4 +90,4 @@ class FilesPage extends React.Component {
     }
 }
 
-export default FilesPage
+export default withRouter(FilesPage)

@@ -16,14 +16,14 @@ router.post('/new', function(req, res) {
     lastName: req.body.lastName,
     password: req.body.password
   })
-  userService.createUser(user).then((user) => {
-    res.status(200).send({
+  userService.createUser(user).then((token) => {
+    res.cookie('token', token).send({
       status: 200,
       msg: 'succeed'
     })
   }, (err) => {
-    res.status(400).send({
-      status: 400,
+    res.send({
+      status: 200,
       msg: err
     })
   })
@@ -34,8 +34,6 @@ router.post('/sign_in', function (req, res) {
     email: req.body.email,
     password: req.body.password
   })
-
-  console.log(user)
 
   userService.userSignIn(user).then((token) => {
     res.cookie('token', token).send({

@@ -1,16 +1,9 @@
-import {Card} from 'antd'
+import {Card, message} from 'antd'
 import React from "react";
 import './FileCard.css'
-import CodeIcon from '../assets/img/code-icon.png'
-import MdIcon from '../assets/img/markdown-icon.png'
-
-let FileDisplay = (props) => {
-    if (props.type === "markdown") {
-        return <img src={MdIcon} alt='' className='md-icon'/>
-    } else {
-        return <img src={CodeIcon} alt='' className='code-icon'/>
-    }
-}
+import FileImg from "./FileImg";
+import {axiosInstance as axios} from "../utils/axios";
+import {withRouter} from "react-router-dom";
 
 let FileType = (props) => {
     if (props.type === "markdown") {
@@ -29,16 +22,33 @@ let FileType = (props) => {
 }
 
 class FileCard extends React.Component {
+
+    createNewFile = () => {
+        axios.post('/api/document/new', {
+            type: this.props.type
+        }).then(res => {
+            console.log(res)
+            if (res.data.msg === 'succeed') {
+                console.log(this.props.history)
+                this.props.history.push('/edit/' + this.props.type + "/" + res.data.id);
+            } else {
+                message.error(res.data.msg)
+            }
+        }).catch(e => {
+            message.error('Error creating new file. ' + e)
+        });
+    }
+
     render() {
         return (
-            <div className='file-card-div'>
+            <div className='file-card-div' onClick={this.createNewFile}>
                 <Card id="file-card" hoverable={true}>
-                    <FileDisplay type={this.props.type}/>
+                    <FileImg type={this.props.type}/>
                 </Card>
-                <FileType type={this.props.type }/>
+                <FileType type={this.props.type}/>
             </div>
         )
     }
 }
 
-export default FileCard
+export default withRouter(FileCard)
