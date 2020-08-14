@@ -22,6 +22,12 @@ let UserSchema = mongoose.Schema({
         type: String,
         required: true,
         minlength: 8
+    },
+    files: {
+        type: Map,
+        of: Date,
+        required: true,
+        default: {}
     }
 })
 

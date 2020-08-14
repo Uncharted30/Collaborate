@@ -2,8 +2,8 @@ const User = require("../model/User")
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
-const privateKey = process.env.PRIVATE_KEY
 const publicKey = process.env.PUBLIC_KEY
+const privateKey = process.env.PRIVATE_KEY
 
 const saltRounds = 10
 
@@ -23,7 +23,11 @@ let createUser = function (user) {
                                 reject("Error creating new user.")
                             }
                         })
-                        resolve(user)
+                        let token = jwt.sign({
+                            email: user.email,
+                            id: user._id
+                        }, privateKey, { algorithm: 'RS256', expiresIn: '30d'})
+                        resolve(token)
                     }
                 })
             }
@@ -52,9 +56,11 @@ let updateUser = function(user, token) {
                         dbUser.save(function (err) {
                             if (err) {
                                 reject("Error updating user information.")
+                            } else {
+
+                                resolve()
                             }
                         })
-                        resolve(dbUser)
                     }
                 })
             } else {
@@ -73,9 +79,9 @@ let userSignIn = (user) => {
                         reject("Error signing you in.")
                     } else {
                         if (result) {
-                            console.log(privateKey)
                             let token = jwt.sign({
-                                email: user.email
+                                email: user.email,
+                                id: user._id
                             }, privateKey, { algorithm: 'RS256', expiresIn: '30d'})
                             resolve(token)
                         } else {
