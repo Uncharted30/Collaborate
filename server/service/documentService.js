@@ -5,7 +5,7 @@ const publicKey = process.env.PUBLIC_KEY
 const User = require('../model/User')
 const Document = require('../model/Document')
 
-const MD_DEFAULT = '#This is an H1\n##This is an H2\n######This is an H6';
+const MD_DEFAULT = '# This is an H1\n## This is an H2\n###### This is an H6';
 const CODE_DEFAULT = 'public class Example {' +
     '\n\tpublic static void main(String[] args) {' +
     '\n\t\tSystem.out.println("Hello World!");' +
@@ -37,7 +37,6 @@ const createNewDocument = (newDocument, token) => {
                 resolve(newDocument)
                 User.findById(userId, (err, user) => {
                     if (!err && user) {
-                        console.log(user)
                         user.files.set(newDocument._id.toString(), newDocument.created)
                         user.save()
                     } else {
@@ -61,7 +60,7 @@ const getDocumentsByUser = (token) => {
                         '_id': {
                             $in: keys
                         }
-                    }, 'filename lastEdited type',(err, docs) => {
+                    }, 'filename lastEdited type', (err, docs) => {
                         if (!err && docs) {
                             let docInfo = []
                             docs.forEach(doc => {
@@ -89,6 +88,75 @@ const getDocumentsByUser = (token) => {
     })
 }
 
+const getDocumentById = (id, token) => {
+    return new Promise((resolve, reject) => {
+        let decoded;
+        try {
+            decoded = jwt.verify(token, publicKey);
+        } catch (e) {
+            reject("Unauthorized");
+            return
+        }
+
+        Document.findById(id, (err, doc) => {
+                if (!err && doc) {
+                    const access = doc.access.get(decoded.id)
+                    if (access) {
+                        doc.access = access
+                        resolve(doc)
+                    } else {
+                        reject("no_access")
+                    }
+                } else {
+                    reject("File not found.")
+                }
+            }
+        )
+    })
+}
+
+const updateDocument = (updateDoc, token) => {
+    return new Promise((resolve, reject) => {
+        let decoded;
+        try {
+            decoded = jwt.verify(token, publicKey);
+        } catch (e) {
+            reject("Unauthorized");
+            return
+        }
+
+        Document.findById(updateDoc.id, (err, doc) => {
+                if (!err && doc) {
+                    const access = doc.access.get(decoded.id)
+                    if (access === 'edit') {
+                        doc.content = updateDoc.content
+                        doc.filename = updateDoc.filename
+                        doc.lastEdited = Date.now()
+                        doc.lastEditedBy = decoded._id
+                        doc.save(err => {
+                            if (err) {
+                                reject("Error saving file. Please try again later.")
+                            } else {
+                                resolve({
+                                    lastEdited: doc.lastEdited,
+                                    lastEditedBy: doc.lastEditedBy
+                                })
+                            }
+                        })
+                    } else {
+                        reject("no_access")
+                    }
+                } else {
+                    reject("File not found.")
+                }
+            }
+        )
+    })
+}
+
 module.exports = {
-    createNewDocument, getDocumentsByUser
+    createNewDocument,
+    getDocumentsByUser,
+    getDocumentById,
+    updateDocument
 }

@@ -29,7 +29,7 @@ router.post('/new', (req, res) => {
     })
 })
 
-router.get('/', (req, res) => {
+router.get('/list', (req, res) => {
     let token = req.cookies['token']
     documentService.getDocumentsByUser(token).then(docInfo => {
         res.send({
@@ -41,6 +41,51 @@ router.get('/', (req, res) => {
         res.send({
             status: 200,
             msg: e
+        })
+    })
+})
+
+router.get('/one/:id', (req, res) => {
+    const token = req.cookies['token']
+    const id = req.params.id
+    documentService.getDocumentById(id, token).then((doc) => {
+        res.send({
+            status: 200,
+            msg: 'succeed',
+            doc: doc
+        })
+    }).catch(e => {
+        res.send({
+            status: 200,
+            msg: e
+        })
+    })
+})
+
+router.put('/', (req, res) => {
+    const token = req.cookies['token']
+    const id = req.body.id
+    const content = req.body.content
+    const filename = req.body.filename
+
+    console.log(id)
+    updateDoc = new Document({
+        _id: id,
+        content: content,
+        filename: filename
+    })
+
+    console.log(updateDoc._id)
+    documentService.updateDocument(updateDoc, token).then((doc) => {
+        res.send({
+            status: 200,
+            msg: 'succeed',
+            doc: doc
+        })
+    }).catch(e => {
+        res.send({
+            status: 200,
+            msg: e,
         })
     })
 })

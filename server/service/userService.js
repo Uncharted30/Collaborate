@@ -80,8 +80,8 @@ let userSignIn = (user) => {
                     } else {
                         if (result) {
                             let token = jwt.sign({
-                                email: user.email,
-                                id: user._id
+                                email: dbUser.email,
+                                id: dbUser._id
                             }, privateKey, { algorithm: 'RS256', expiresIn: '30d'})
                             resolve(token)
                         } else {
