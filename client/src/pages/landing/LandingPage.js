@@ -10,13 +10,15 @@ import SignUp from "../../components/SignUpBox";
 // import {LoginBox} from "../../components/LoginBox"
 
 class LandingPage extends React.Component {
-    switchToSignUp = () => {
+    switchToSignUp = (e) => {
+        e.preventDefault()
         this.setState({
             show: this.signUp
         })
     }
 
-    switchToSignIn = () => {
+    switchToSignIn = (e) => {
+        e.preventDefault()
         this.setState({
             show: this.signIn
         })

@@ -16,11 +16,13 @@ import "ace-builds/src-noconflict/theme-twilight";
 import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/theme-monokai";
 import './CodeEditor.css'
-import {Row} from "antd";
+import {message, Row} from "antd";
 import {Divider} from "@material-ui/core";
 import CodeSelector from "./CodeSelector";
 import ThemeSelector from "./ThemeSelector";
 import FileOptions from "./FileOptions";
+import {axiosInstance as axios} from "../utils/axios";
+const AUTO_SAVE_INTERVAL = 5000
 
 class CodeEditor extends React.Component {
 
@@ -31,10 +33,20 @@ class CodeEditor extends React.Component {
             mode: 'java',
             theme: 'github'
         }
+        this.filename = props.doc.filename
+        this.content = props.doc.content
+        this.lastSave = props.doc.lastEdited
+        this.lastChange = props.doc.lastEdited
     }
 
     onChange(newValue) {
-        console.log('change', newValue);
+        this.content = newValue
+        this.lastChange = new Date()
+        console.log(newValue)
+    }
+
+    setFilename = (filename) => {
+        this.filename = filename
     }
 
     changeMode = (mode) => {
@@ -49,12 +61,50 @@ class CodeEditor extends React.Component {
         })
     }
 
+    componentDidMount() {
+        this.interval = setInterval(this.autoSave, AUTO_SAVE_INTERVAL)
+        this.lastChange = new Date(this.props.doc.lastEdited)
+        this.lastSave = new Date(this.props.doc.lastEdited)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    }
+
+    autoSave = () => {
+        if (this.lastChange.getTime() > this.lastSave.getTime()) {
+            this.saveFile()
+        } else {
+            console.log("No change")
+        }
+    }
+
+    saveFile = () => {
+        axios.put('/api/document', {
+            id: this.props.doc._id,
+            content: this.content,
+            filename: this.filename
+        }).then(res => {
+            if (res.data.msg === 'succeed') {
+                console.log(res.data.doc.lastEdited)
+                this.lastSave = new Date(res.data.doc.lastEdited)
+            } else {
+                message.error('Error saving file. ' + res.data.msg)
+            }
+        }).catch(e => {
+            message.error('Error saving file. ' + e)
+        })
+    }
+
     render() {
         return (
             <div id='editor-div'>
                 <Row id='editor-info-row'>
                     <div>
-                        <FileOptions/>
+                        <FileOptions
+                            setFilename={this.setFilename}
+                            filename={this.filename}
+                            fileId={this.props.doc._id}/>
                     </div>
                     <div className='editor-info-div'>
                         <ThemeSelector changeTheme={this.changeTheme}/>
@@ -66,12 +116,14 @@ class CodeEditor extends React.Component {
                     mode={this.state.mode}
                     theme={this.state.theme}
                     onChange={this.onChange}
+                    value={this.content}
                     name="UNIQUE_ID_OF_DIV"
                     editorProps={{
                         $blockScrolling: true
                     }}
                     width='100%'
                     className='ace-editor'
+                    onLoad={instance => this.editor = instance}
                 />
             </div>
         );

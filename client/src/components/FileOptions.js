@@ -29,13 +29,24 @@ const menu = (
 
 class FileOptions extends React.Component {
 
+    setFilename = (e) => {
+        const newFilename = e.target.value
+        this.props.setFilename(newFilename)
+    }
+
     render() {
         return (
             <div className='editor-info-div'>
-                <Input defaultValue="Filename" bordered={false} style={{width: 140}} className='filename-input'/>
+                <Input
+                    defaultValue={this.props.filename}
+                    bordered={false}
+                    style={{width: 140}}
+                    className='filename-input'
+                    onBlur={this.setFilename}
+                    onSubmit={this.setFilename}/>
                 <Divider orientation="vertical" flexItem style={{height:39}}/>
-                <Dropdown overlay={menu} className='option-dropdown' trigger={['click', 'hover']}>
-                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()} href=''>
+                <Dropdown overlay={menu} className='option-dropdown' trigger={['click']}>
+                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()} href='/'>
                         Options
                     </a>
                 </Dropdown>

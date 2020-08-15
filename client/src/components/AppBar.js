@@ -136,7 +136,7 @@ export default function PrimarySearchAppBar() {
 
     return (
         <div>
-            <AppBar position="fixed" id="app-bar">
+            <AppBar position="fixed" id="app-bar" style={{zIndex: 10}}>
                 <Toolbar id="tool-bar">
                     <img src={appBarLogo} alt="logo" id='app-bar-logo'/>
                     <div className={classes.search}>

@@ -6,8 +6,6 @@ import RecentFileCard from "../../components/RecentFileCard";
 import {withRouter} from "react-router-dom";
 import {axiosInstance as axios} from "../../utils/axios";
 
-const recents = [<RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>, <RecentFileCard/>]
-
 class FilesPage extends React.Component {
 
     constructor(props) {
@@ -18,7 +16,7 @@ class FilesPage extends React.Component {
     }
 
     fetchData = () => {
-        axios.get('/api/document').then(res => {
+        axios.get('/api/document/list').then(res => {
             if (res.data.msg === 'succeed') {
                 console.log(res)
                 this.setState({
@@ -80,7 +78,7 @@ class FilesPage extends React.Component {
                         </Row>
                         <Row className='recent-files-row'>
                             {this.state.docs.map((doc) => {
-                                return <RecentFileCard doc={doc}/>
+                                return <RecentFileCard doc={doc} key={doc.id}/>
                             })}
                         </Row>
                     </div>
