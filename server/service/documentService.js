@@ -83,7 +83,7 @@ const getDocumentsByUser = (token) => {
             })
 
         } catch (e) {
-            reject("Unauthorized.")
+            reject("Unauthorized")
         }
     })
 }

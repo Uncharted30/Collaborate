@@ -5,6 +5,8 @@ const userRouter = require("./routes/user")
 const documentRouter = require("./routes/document")
 const mongoose = require("mongoose");
 const cors = require('cors')
+const http = require('http');
+const io = require('socket.io')();
 
 require('dotenv').config()
 
@@ -29,6 +31,10 @@ app.use('/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/document', documentRouter);
 
-app.listen(8000, function () {
+const server = http.createServer(app)
+const socketService = require('./service/socketService')(io)
+io.attach(server)
+
+server.listen(8000, function () {
   console.log('App listening on port 8000!')
 })
