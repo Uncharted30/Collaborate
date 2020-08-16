@@ -11,6 +11,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import './AppBar.css'
 import appBarLogo from '../assets/img/app_bar_logo.svg'
+import cookies from "react-cookies"
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -68,8 +70,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function NavBar() {
     const classes = useStyles();
+    const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -94,6 +97,11 @@ export default function PrimarySearchAppBar() {
     };
 
     const menuId = 'primary-search-account-menu';
+    const handleSignOut = () => {
+        cookies.remove('token')
+        history.push('/')
+    }
+
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -104,8 +112,8 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
         </Menu>
     );
 
@@ -129,7 +137,6 @@ export default function PrimarySearchAppBar() {
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
             </MenuItem>
         </Menu>
     );

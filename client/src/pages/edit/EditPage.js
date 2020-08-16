@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './EditPage.css'
 import CodeEditor from "../../components/CodeEditor";
 import MDEditor from "../../components/MDEditor";
 import {useParams} from "react-router-dom"
-import {axiosInstance as axios} from "../../utils/axios";
+import {axiosInstance} from "../../utils/axios";
+import axios from 'axios'
 import {message} from "antd";
+import cookies from "react-cookies";
+import { useHistory } from 'react-router-dom'
 
 let Editor = (props) => {
     if (props.type === 'markdown') {
@@ -19,14 +22,32 @@ const EditPage = (props) => {
 
     const [doc, setDoc] = useState(undefined)
 
-    axios.get('/api/document/one/' + id).then((res) => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    const history = useHistory()
+
+    const handleUnauthorized = () => {
+        cookies.remove('token')
+        history.push('/')
+    }
+
+    axiosInstance.get('/api/document/one/' + id, {cancelToken: source.token}).then((res) => {
         if (res.data.msg === 'succeed') {
             setDoc(res.data.doc)
+        } else if (res.data.msg === 'Unauthorized') {
+            message.error('Unauthorized. Please sign in first.');
+            setTimeout(handleUnauthorized, 2000)
         } else {
             message.error(res.data.msg)
         }
     }).catch(e => {
-        message.error("Error fetching file. " + e)
+        if (e.toString() !== 'Cancel')message.error("Error fetching file. " + e)
+    })
+
+    useEffect(() => {
+        return () => {
+            source.cancel()
+        }
     })
 
     if (doc) {

@@ -15,18 +15,16 @@ function App() {
             <LandingPage/>
           </Route>
           <Route path='/'>
-            <BrowserRouter>
               <MenuAppBar/>
-              <Route path='/files'>
+              <Route exact path='/files'>
                 <FilesPage/>
               </Route>
-              <Route path='/edit/:type/:id'>
+              <Route exact path='/edit/:type/:id'>
                 <EditPage/>
               </Route>
-              <Route path='/account'>
+              <Route exact path='/account'>
                 <AccountPage/>
               </Route>
-            </BrowserRouter>
           </Route>
         </Switch>
       </BrowserRouter>

@@ -5,6 +5,7 @@ import FileCard from "../../components/FileCard"
 import RecentFileCard from "../../components/RecentFileCard";
 import {withRouter} from "react-router-dom";
 import {axiosInstance as axios} from "../../utils/axios";
+import cookies from "react-cookies";
 
 class FilesPage extends React.Component {
 
@@ -18,10 +19,12 @@ class FilesPage extends React.Component {
     fetchData = () => {
         axios.get('/api/document/list').then(res => {
             if (res.data.msg === 'succeed') {
-                console.log(res)
                 this.setState({
                     docs: res.data.docs
                 })
+            } else if (res.data.msg === 'Unauthorized') {
+                message.error("Unauthorized. Please sign in first.")
+                setTimeout(this.handleUnauthorized, 3000)
             } else {
                 message.error("Error fetching files. " + res.data.msg)
             }
@@ -32,6 +35,11 @@ class FilesPage extends React.Component {
 
     componentDidMount() {
         this.fetchData()
+    }
+
+    handleUnauthorized = () => {
+        cookies.remove('token')
+        this.props.history.push('/')
     }
 
     render() {
