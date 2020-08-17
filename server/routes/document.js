@@ -14,11 +14,10 @@ router.post('/new', (req, res) => {
         type: req.body.type,
         access: {}
     })
-    let token = req.cookies['token']
-    documentService.createNewDocument(newDocument, token).then((newDocument) => {
+    documentService.createNewDocument(newDocument, req.userId).then((newDocument) => {
         res.send({
             status: 200,
-            msg: 'succeed',
+            msg: 'success',
             id: newDocument._id
         })
     }).catch((e) => {
@@ -30,11 +29,10 @@ router.post('/new', (req, res) => {
 })
 
 router.get('/list', (req, res) => {
-    let token = req.cookies['token']
-    documentService.getDocumentsByUser(token).then(docInfo => {
+    documentService.getDocumentsByUser(req.userId).then(docInfo => {
         res.send({
             status: 200,
-            msg: 'succeed',
+            msg: 'success',
             docs: docInfo
         })
     }).catch(e => {
@@ -46,12 +44,11 @@ router.get('/list', (req, res) => {
 })
 
 router.get('/one/:id', (req, res) => {
-    const token = req.cookies['token']
-    const id = req.params.id
-    documentService.getDocumentById(id, token).then((doc) => {
+    const docId = req.params.id
+    documentService.getDocumentById(docId, req.userId).then((doc) => {
         res.send({
             status: 200,
-            msg: 'succeed',
+            msg: 'success',
             doc: doc
         })
     }).catch(e => {
@@ -63,29 +60,61 @@ router.get('/one/:id', (req, res) => {
 })
 
 router.put('/', (req, res) => {
-    const token = req.cookies['token']
     const id = req.body.id
     const content = req.body.content
     const filename = req.body.filename
 
-    console.log(id)
     updateDoc = new Document({
         _id: id,
         content: content,
         filename: filename
     })
 
-    console.log(updateDoc._id)
-    documentService.updateDocument(updateDoc, token).then((doc) => {
+    documentService.updateDocument(updateDoc, req.userId).then((doc) => {
         res.send({
             status: 200,
-            msg: 'succeed',
+            msg: 'success',
             doc: doc
         })
     }).catch(e => {
         res.send({
             status: 200,
             msg: e,
+        })
+    })
+})
+
+router.delete('/:id', (req, res) => {
+    const docId = req.params.id
+    const userId = req.userId
+    console.log(userId)
+    documentService.deleteDocument(docId, userId).then(() => {
+        res.send({
+            status: 200,
+            msg: 'success'
+        })
+    }).catch(e => {
+        res.send({
+            status: 200,
+            msg: e
+        })
+    })
+})
+
+router.post('/copy', (req, res) => {
+    const docId = req.body.id
+    const userId = req.userId
+
+    documentService.makeCopy(docId, userId).then(newId => {
+        res.send({
+            status: 200,
+            msg: 'success',
+            id: newId
+        })
+    }).catch(e => {
+        res.send({
+            status: 200,
+            msg: e
         })
     })
 })

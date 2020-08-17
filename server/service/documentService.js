@@ -1,9 +1,7 @@
-const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
 require('dotenv').config()
-const publicKey = process.env.PUBLIC_KEY
 const User = require('../model/User')
 const Document = require('../model/Document')
+const mongoose = require('mongoose')
 
 const MD_DEFAULT = '# This is an H1\n## This is an H2\n###### This is an H6';
 const CODE_DEFAULT = 'public class Example {' +
@@ -12,16 +10,8 @@ const CODE_DEFAULT = 'public class Example {' +
     '\n\t}' +
     '\n}';
 
-const createNewDocument = (newDocument, token) => {
+const createNewDocument = (newDocument, userId) => {
     return new Promise((resolve, reject) => {
-        let decoded;
-        try {
-            decoded = jwt.verify(token, publicKey);
-        } catch (e) {
-            reject("Unauthorized.")
-            return
-        }
-        let userId = decoded.id;
         newDocument.createdBy = userId;
         newDocument.access.set(userId, 'edit');
         newDocument.lastEditedBy = userId;
@@ -48,64 +38,63 @@ const createNewDocument = (newDocument, token) => {
     });
 }
 
-const getDocumentsByUser = (token) => {
+const getDocumentsByUser = (userId) => {
     return new Promise((resolve, reject) => {
-        let decoded;
-        try {
-            decoded = jwt.verify(token, publicKey);
-            User.findById(decoded.id, (err, user) => {
-                if (!err && user) {
-                    let keys = [...user.files.keys()]
-                    Document.find({
-                        '_id': {
-                            $in: keys
-                        }
-                    }, 'filename lastEdited type', (err, docs) => {
-                        if (!err && docs) {
-                            let docInfo = []
-                            docs.forEach(doc => {
-                                docInfo.push({
-                                    id: doc._id,
-                                    filename: doc.filename,
-                                    lastEdited: doc.lastEdited,
-                                    type: doc.type,
-                                    lastOpened: user.files.get(doc._id)
-                                })
+        console.log(userId)
+        User.findById(userId, (err, user) => {
+            if (!err && user) {
+                let keys = [...user.files.keys()]
+                Document.find({
+                    '_id': {
+                        $in: keys
+                    }
+                }, 'filename lastEdited type', (err, docs) => {
+                    if (!err && docs) {
+                        let docInfo = []
+                        docs.forEach(doc => {
+                            docInfo.push({
+                                id: doc._id,
+                                filename: doc.filename,
+                                lastEdited: doc.lastEdited,
+                                type: doc.type,
+                                lastOpened: user.files.get(doc._id)
                             })
-                            resolve(docInfo)
-                        } else {
-                            reject("Error retrieving documents.")
-                        }
-                    })
-                } else {
-                    reject("User not found!");
-                }
-            })
-
-        } catch (e) {
-            reject("Unauthorized")
-        }
+                        })
+                        resolve(docInfo)
+                    } else {
+                        reject("Error retrieving documents.")
+                    }
+                })
+            } else {
+                reject("User not found!");
+            }
+        })
     })
 }
 
-const getDocumentById = (id, token) => {
+const getDocumentById = (docId, userId) => {
     return new Promise((resolve, reject) => {
-        let decoded;
-        try {
-            decoded = jwt.verify(token, publicKey);
-        } catch (e) {
-            reject("Unauthorized");
-            return
-        }
-
-        Document.findById(id, (err, doc) => {
+        Document.findById(docId, (err, doc) => {
                 if (!err && doc) {
-                    const access = doc.access.get(decoded.id)
-                    if (access) {
-                        doc.access = access
+                    if (doc.accessType.startsWith('public')) {
                         resolve(doc)
                     } else {
-                        reject("no_access")
+                        const access = doc.access.get(userId)
+                        if (access) {
+                            doc.access = access
+                            User.findById(userId, (err, user) => {
+                                if (!err && user) {
+                                    user.files.set(doc._id.toString(), new Date())
+                                    user.save((err) => {
+                                        resolve(doc)
+                                    })
+                                } else {
+                                    reject('User not found.')
+                                }
+                            })
+                        } else {
+                            reject("no_access")
+                        }
                     }
                 } else {
                     reject("File not found.")
@@ -115,24 +104,16 @@ const getDocumentById = (id, token) => {
     })
 }
 
-const updateDocument = (updateDoc, token) => {
+const updateDocument = (updateDoc, userId) => {
     return new Promise((resolve, reject) => {
-        let decoded;
-        try {
-            decoded = jwt.verify(token, publicKey);
-        } catch (e) {
-            reject("Unauthorized");
-            return
-        }
-
         Document.findById(updateDoc.id, (err, doc) => {
                 if (!err && doc) {
-                    const access = doc.access.get(decoded.id)
-                    if (access === 'edit') {
+                    const access = doc.access.get(userId)
+                    if (doc.accessType === 'public-edit' || access === 'edit') {
                         doc.content = updateDoc.content
                         doc.filename = updateDoc.filename
                         doc.lastEdited = Date.now()
-                        doc.lastEditedBy = decoded._id
+                        doc.lastEditedBy = userId
                         doc.save(err => {
                             if (err) {
                                 reject("Error saving file. Please try again later.")
@@ -154,9 +135,90 @@ const updateDocument = (updateDoc, token) => {
     })
 }
 
+const shareFile = () => {
+
+}
+
+const deleteDocument = (docId, userId) => {
+    return new Promise((resolve, reject) => {
+        User.findById(userId, (err, user) => {
+            if (!err && user) {
+                if (user.files.get(docId)) {
+                    user.files.delete(docId)
+                    user.save(err => {
+                        if (!err) {
+                            // delete document if the document is created by the user
+                            Document.findById(docId, '_id createdBy', (err, doc) => {
+                                if (!err && doc) {
+                                    if (doc.createdBy === userId) {
+                                        Document.deleteOne({_id: docId}, err => {
+                                            if (err) {
+                                                reject(err)
+                                            } else {
+                                                resolve()
+                                            }
+                                        })
+                                    } else resolve()
+                                } else {
+                                    reject('File not found.')
+                                }
+                            })
+                        } else {
+                            reject('Error deleting file. ' + err)
+                        }
+                    })
+                } else {
+                    reject("File is not in user's list.")
+                }
+            } else {
+                reject('User not found.')
+            }
+        })
+    })
+}
+
+const makeCopy = (docId, userId) => {
+    return new Promise((resolve, reject) => {
+        Document.findById(docId, (err, doc) => {
+            if (!err && doc) {
+                // create a new document object in database
+                // only the creator has access
+                doc._id = mongoose.Types.ObjectId()
+                doc.isNew = true
+                doc.created = new Date()
+                doc.filename = doc.filename + "_copy"
+                doc.lastEdited = new Date()
+                doc.createdBy = userId
+                doc.lastEditedBy = userId
+                doc.accessType = 'controlled'
+                doc.access = new Map()
+                doc.access.set(userId, 'edit')
+                doc.save(err => {
+                    if (!err) {
+                        User.findById(userId, (err, user) => {
+                            if (!err && user) {
+                                user.files.set(doc._id, new Date())
+                                user.save
+                            } else {
+                                reject('User not found')
+                            }
+                        })
+                    } else {
+                        reject("Error creating a copy of the file. " + err)
+                    }
+                })
+            } else {
+                reject('File not found.')
+            }
+        })
+    })
+}
+
 module.exports = {
     createNewDocument,
     getDocumentsByUser,
     getDocumentById,
-    updateDocument
+    updateDocument,
+    deleteDocument,
+    makeCopy
 }

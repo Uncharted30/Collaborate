@@ -33,6 +33,12 @@ let DocumentSchema = mongoose.Schema({
         enum: ['markdown', 'code'],
         required: true
     },
+    accessType: {
+        type: String,
+        enum: ['public-edit', 'public-view', 'controlled'],
+        required: true,
+        default: 'controlled'
+    },
     access: {
         type: Map,
         of: String,

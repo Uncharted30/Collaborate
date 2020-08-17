@@ -19,7 +19,7 @@ router.post('/new', function(req, res) {
   userService.createUser(user).then((token) => {
     res.cookie('token', token).send({
       status: 200,
-      msg: 'succeed'
+      msg: 'success'
     })
   }, (err) => {
     res.send({
@@ -38,7 +38,7 @@ router.post('/sign_in', function (req, res) {
   userService.userSignIn(user).then((token) => {
     res.cookie('token', token).send({
       status: 200,
-      msg: "succeed"
+      msg: "success"
     })
   }).catch((err) => {
     res.send({
@@ -60,7 +60,7 @@ router.put('/', function (req, res) {
   userService.updateUser(user, token).then(() => {
     res.status(200).send({
       status: 200,
-      msg: 'succeed'
+      msg: 'success'
     })
   }).catch((err) => {
     res.status(400).send({
