@@ -21,7 +21,7 @@ import CodeSelector from "./CodeSelector";
 import ThemeSelector from "./ThemeSelector";
 import FileOptions from "./FileOptions";
 import socketIOClient from "socket.io-client";
-import saveFile from "../utils/autoSaveUtil";
+import {saveFile} from "../utils/fileUtils";
 
 const AUTO_SAVE_INTERVAL = 5000
 
@@ -61,6 +61,7 @@ class CodeEditor extends React.Component {
 
     setFilename = (filename) => {
         this.filename = filename
+        this.lastChange = new Date()
     }
 
     changeMode = (mode) => {
@@ -116,8 +117,8 @@ class CodeEditor extends React.Component {
                     <div>
                         <FileOptions
                             setFilename={this.setFilename}
-                            filename={this.filename}
-                            fileId={this.props.doc._id}/>
+                            doc={this.props.doc}
+                            fetchFile={this.props.fetchFile}/>
                     </div>
                     <div className='editor-info-div'>
                         <ThemeSelector changeTheme={this.changeTheme}/>

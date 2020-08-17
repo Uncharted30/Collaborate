@@ -25,3 +25,13 @@
     background-color: #fff;
     border: #0e6cff solid 1px;
 }
+
+#access-table {
+    margin-top: 10px;
+}
+
+#share-button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin: 15px 0;
+}

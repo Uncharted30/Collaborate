@@ -7,6 +7,11 @@
     height: auto;
 }
 
+.logo-link {
+    width: 230px;
+    height: auto;
+}
+
 #tool-bar {
     display: flex;
     justify-content: space-between;

@@ -63,7 +63,7 @@ export default function SignIn(props) {
             password: form.password.value
         }).then(
             (res) => {
-                if (res.data.msg === 'succeed') {
+                if (res.data.msg === 'success') {
                     history.push('/files')
                 } else {
                     message.error(res.data.msg)

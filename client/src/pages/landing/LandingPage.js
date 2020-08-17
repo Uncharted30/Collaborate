@@ -6,6 +6,8 @@ import {Row, Col} from "antd";
 import Logo from "../../assets/img/logo.svg"
 import SignIn from "../../components/SignInBox";
 import SignUp from "../../components/SignUpBox";
+import cookies from "react-cookies"
+import { withRouter } from 'react-router-dom'
 
 // import {LoginBox} from "../../components/LoginBox"
 
@@ -29,6 +31,8 @@ class LandingPage extends React.Component {
 
     constructor(props) {
         super(props);
+        const token = cookies.load('token')
+        if (token) this.props.history.push('/files')
         this.state = {
             show: this.signIn
         }
@@ -64,4 +68,4 @@ class LandingPage extends React.Component {
     }
 }
 
-export {LandingPage}
+export default withRouter(LandingPage)

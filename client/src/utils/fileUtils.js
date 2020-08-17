@@ -17,21 +17,31 @@ const saveFile = (data) => {
 }
 
 const deleteFile = (id, fetchData) => {
+    axios.delete('/api/document/' + id).then(res => {
+        if (res.data.msg === 'success') {
+            message.success('Success.')
+            fetchData()
+        } else {
+            message.error('Error deleting file. ' + res.data.msg)
+        }
+    }).catch(e => {
+        message.error("Error deleting file. " + e)
+    })
+}
+
+const makeCopy = (docId) => {
     return new Promise((resolve, reject) => {
-        axios.delete('/api/document/' + id).then(res => {
-            if (res.data.msg === 'success') {
-                message.success('Success.')
-                setTimeout(fetchData, 2000)
-            } else {
-                message.error('Error deleting file. ' + res.data.msg)
-            }
+        axios.post('/api/document/copy',
+            {id: docId}).then(res => {
+                resolve(res.data.id)
         }).catch(e => {
-            message.error("Error deleting file. " + e)
+            reject(e)
         })
     })
 }
 
 export {
     saveFile,
-    deleteFile
+    deleteFile,
+    makeCopy
 }

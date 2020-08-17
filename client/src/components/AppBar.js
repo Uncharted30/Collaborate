@@ -12,7 +12,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import './AppBar.css'
 import appBarLogo from '../assets/img/app_bar_logo.svg'
 import cookies from "react-cookies"
-import { useHistory } from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -145,7 +145,7 @@ export default function NavBar() {
         <div>
             <AppBar position="fixed" id="app-bar" style={{zIndex: 10}}>
                 <Toolbar id="tool-bar">
-                    <img src={appBarLogo} alt="logo" id='app-bar-logo'/>
+                    <Link to='/files' className='logo-link'><img src={appBarLogo} alt="logo" id='app-bar-logo'/></Link>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />

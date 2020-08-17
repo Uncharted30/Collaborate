@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {LandingPage} from "./pages/landing/LandingPage";
+import LandingPage from "./pages/landing/LandingPage";
 import MenuAppBar from './components/AppBar'
 import FilesPage from "./pages/files/FilesPage";
 import AccountPage from "./pages/account/AccountPage";
@@ -19,8 +19,8 @@ function App() {
               <Route exact path='/files'>
                 <FilesPage/>
               </Route>
-              <Route exact path='/edit/:type/:id'>
-                <EditPage/>
+              <Route exact path='/edit/:id' render={(props) => <EditPage {...props}/>}>
+
               </Route>
               <Route exact path='/account'>
                 <AccountPage/>

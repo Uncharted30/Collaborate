@@ -23,7 +23,7 @@
 }
 
 .recent-file-card .ant-card-body {
-    padding-top: 14px;
+    padding-top: 8px;
     padding-bottom: 0;
 }
 
@@ -43,4 +43,27 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+.drop-down-button {
+    position: relative;
+    left: 10px;
+}
+
+.drop-down-button .ant-dropdown-trigger {
+    border: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.drop-down-button .ant-dropdown-trigger:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 50% !important;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

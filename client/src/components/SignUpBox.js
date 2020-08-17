@@ -77,7 +77,11 @@ export default function SignUp(props) {
             lastName: form.lastName.value,
             password: form.password.value
         }).then((res) => {
-            history.push('/files')
+            if (res.data.msg === 'success') {
+                history.push('/files')
+            } else {
+                message.error(res.data.msg)
+            }
         }).catch((err) => {
             message.error("Error signing up, please try again later. " + err)
         })

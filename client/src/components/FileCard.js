@@ -28,9 +28,8 @@ class FileCard extends React.Component {
             type: this.props.type
         }).then(res => {
             console.log(res)
-            if (res.data.msg === 'succeed') {
-                console.log(this.props.history)
-                this.props.history.push('/edit/' + this.props.type + "/" + res.data.id);
+            if (res.data.msg === 'success') {
+                this.props.history.push('/edit/' + res.data.id);
             } else {
                 message.error(res.data.msg)
             }
