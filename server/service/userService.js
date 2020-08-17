@@ -7,117 +7,67 @@ const privateKey = process.env.PRIVATE_KEY
 
 const saltRounds = 10
 
-let createUser = function (user) {
-    return new Promise((resolve, reject) => {
-        User.findOne({email: user.email}, function (err, dbUser) {
-            if (dbUser) {
-                reject("User exists.")
-            } else {
-                bcrypt.hash(user.password, saltRounds, (err, hash) => {
-                    if (err) {
-                        reject("Error creating new user.")
-                    } else {
-                        user.password = hash
-                        user.save(function (err) {
-                            if (err) {
-                                reject("Error creating new user.")
-                            }
-                        })
-                        let token = jwt.sign({
-                            email: user.email,
-                            id: user._id
-                        }, privateKey, { algorithm: 'RS256', expiresIn: '30d'})
-                        resolve(token)
-                    }
-                })
-            }
-        })
-    })
+let createUser = async user => {
+    user.email = user.email.toLowerCase()
+    const dbUser = await User.findOne({email: user.email})
+    if (dbUser) {
+        throw "User exists."
+    } else {
+        user.password = await bcrypt.hash(user.password, saltRounds)
+        user.save()
+        let token = jwt.sign({
+            email: user.email,
+            id: user._id
+        }, privateKey, {algorithm: 'RS256', expiresIn: '30d'})
+        return token
+    }
 }
 
-let updateUser = function(user, token) {
-    return new Promise((resolve, reject) => {
+let updateUser = async (user, token) => {
+    try {
+        jwt.verify(token, publicKey)
+    } catch (err) {
+        throw "Unauthorized"
+    }
 
-        try {
-            jwt.verify(token, publicKey);
-        } catch (err) {
-            reject("Unauthorized!");
-        }
-
-        User.findOne({email: user.email}, function (err, dbUser) {
-            if (dbUser) {
-                bcrypt.hash(user.password, saltRounds, (err, hash) => {
-                    if (err) {
-                        reject("Error updating user information.")
-                    } else {
-                        dbUser.password = hash
-                        dbUser.firstName = user.firstName
-                        dbUser.lastName = user.lastName
-                        dbUser.save(function (err) {
-                            if (err) {
-                                reject("Error updating user information.")
-                            } else {
-
-                                resolve()
-                            }
-                        })
-                    }
-                })
-            } else {
-                reject("User not found.")
-            }
-        })
-    })
+    const dbUser = await User.findOne({email: user.email})
+    if (user.password) {
+        dbUser.password = bcrypt.hash(user.password, saltRounds)
+    }
+    dbUser.firstName = user.firstName
+    dbUser.lastName = user.lastName
+    dbUser.save()
 }
 
-let userSignIn = (user) => {
-    return new Promise((resolve, reject) => {
-        User.findOne({email: user.email}, function (err, dbUser) {
-            if (dbUser) {
-                bcrypt.compare(user.password, dbUser.password, (err, result) => {
-                    if (err) {
-                        reject("Error signing you in.")
-                    } else {
-                        if (result) {
-                            let token = jwt.sign({
-                                email: dbUser.email,
-                                id: dbUser._id
-                            }, privateKey, { algorithm: 'RS256', expiresIn: '30d'})
-                            resolve(token)
-                        } else {
-                            reject("Incorrect email or password.")
-                        }
-                    }
-                })
-            } else {
-                reject("Incorrect email or password.")
-            }
-        })
-    })
+let userSignIn = async user => {
+    user.email = user.email.toLowerCase()
+    const dbUser = await User.findOne({email: user.email})
+    const res = await bcrypt.compare(user.password, dbUser.password)
+    if (res) {
+        let token = jwt.sign({
+            email: dbUser.email,
+            id: dbUser._id
+        }, privateKey, {algorithm: 'RS256', expiresIn: '30d'})
+        return token
+    } else {
+        throw "Incorrect email or password."
+    }
 }
 
-let getUserInfo = (token) => {
-    return new Promise((resolve, reject) => {
-        try {
-            let decoded = jwt.verify(token, publicKey);
-            User.findOne({
-                email: decoded.email
-            }, (err, user) => {
-                if (user) {
-                    resolve(user);
-                } else {
-                    reject("User not found!");
-                }
-            })
-        } catch {
-            reject("Unauthorized!");
-        }
-    })
+let getUserInfo = async token => {
+    try {
+        let decoded = jwt.verify(token, publicKey)
+        return await User.findById({
+            email: decoded.id
+        })
+    } catch {
+        throw "Unauthorized"
+    }
 }
 
 module.exports = {
     createUser: createUser,
     updateUser: updateUser,
     userSignIn: userSignIn,
-    getUserInfo, getUserInfo
+    getUserInfo: getUserInfo
 }
