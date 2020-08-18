@@ -61,8 +61,8 @@ class FilesPage extends React.Component {
 
         if (option === 'filename') {
             compareFn = (f1, f2) => {
-                if (f1.filename > f2.filename) return -1
-                else if (f1.filename < f2.filename) return 1
+                if (f1.filename > f2.filename) return 1
+                else if (f1.filename < f2.filename) return -1
                 return 0
             }
         } else if (option === 'open') {

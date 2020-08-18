@@ -5,6 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FileImg from "./FileImg";
 import {Link} from "react-router-dom";
 import {deleteFile, makeCopy} from "../utils/fileUtils";
+import {formatDate} from "../utils/utils";
 
 class RecentFileCard extends React.Component {
 
@@ -38,11 +39,6 @@ class RecentFileCard extends React.Component {
         })
     }
 
-    formatDate = (date) => {
-        return `${date.getMonth()}-${date.getDate()}-${date.getFullYear()} 
-        ${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`
-    }
-
     render() {
         const dropdownMenu = (
             <Menu>
@@ -67,7 +63,7 @@ class RecentFileCard extends React.Component {
                         <Col span={18} className='file-info-row'>
                             <Row className='filename-row'>{this.props.doc.filename}</Row>
                             <Row className='date-row'>Last edited:</Row>
-                            <Row className='date-row'>{this.formatDate(this.props.doc.lastEdited)}</Row>
+                            <Row className='date-row'>{formatDate(this.props.doc.lastEdited)}</Row>
                         </Col>
                         <Col span={6} className='more-icon-col'>
                             <Dropdown.Button

@@ -1,4 +1,4 @@
-import {Button, Dropdown, Input, Menu, message, Modal, Row, Select} from 'antd';
+import {Button, Dropdown, Form, Input, Menu, message, Modal, Row, Select} from 'antd';
 import React from "react";
 import './FileOptions.css'
 import {Divider} from "@material-ui/core";
@@ -17,7 +17,6 @@ const setAccessType = (newAccessType, fileId, fetchFile) => {
             message.success('Success.')
             fetchFile()
         } else {
-            console.log(res)
             message.error(res.data.msg.toString())
         }
     }).catch(e => {
@@ -26,26 +25,51 @@ const setAccessType = (newAccessType, fileId, fetchFile) => {
 }
 
 const PrivateAccessInfo = (props) => {
+
+    const addAccess = (value) => {
+        axios.put('/api/document/access/add', {
+            docId: props.doc._id,
+            userEmail: value.email,
+            access: value.access
+        }).then(res => {
+            if (res.data.msg === 'success') {
+                message.success('Success.')
+                props.fetchFile()
+            } else {
+                message.error(res.data.msg)
+            }
+        }).catch(e => {
+            message.error(e)
+        })
+    }
+
     return (
         <div>
-            <Row>
-                <Input.Group compact>
-                    <Input style={{width: '70%'}} placeholder='Email Address'/>
-                    <Select defaultValue="edit" style={{width: '30%'}}>
-                        <Option value="edit">Edit Access</Option>
-                        <Option value="read">Read Access</Option>
-                    </Select>
+            <Form onFinish={addAccess} initialValues={{access: 'edit'}}>
+                <Input.Group compact style={{height: 32}}>
+                    <Form.Item name='email' style={{width: '70%'}}>
+                        <Input placeholder='Email Address'/>
+                    </Form.Item>
+
+                    <Form.Item name='access' style={{width: '30%'}}>
+                        <Select>
+                            <Option value="edit">Edit Access</Option>
+                            <Option value="read">Read Access</Option>
+                        </Select>
+                    </Form.Item>
                 </Input.Group>
-            </Row>
-            <Row id='share-button-row'>
-                <Button type="primary">
-                    Share
-                </Button>
-            </Row>
+                <Row id='share-button-row'>
+                    <Button type="primary" htmlType='submit'>
+                        Share
+                    </Button>
+                </Row>
+            </Form>
             <Divider/>
             <Row id='access-table'>
                 <p>Users who have access to this file:</p>
-                <AccessTable userAccess={props.doc.access} createdBy={props.doc.createdBy}/>
+                <AccessTable
+                    doc={props.doc}
+                    fetchFile={props.fetchFile}/>
             </Row>
             <Row style={{marginTop: 10, height: 15}}>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -71,7 +95,7 @@ const PublicAccessInfo = (props) => {
                     const newAccessType = publicEdit ? 'public-read' : 'public-edit'
                     setAccessType(newAccessType, props.doc._id, props.fetchFile)
                 }}>
-                     everyone could {publicEdit ? ' read' : ' edit'} this file
+                    everyone could {publicEdit ? ' read' : ' edit'} this file
                 </a>.
             </p>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

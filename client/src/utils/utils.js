@@ -10,4 +10,13 @@ function validatePassword(password) {
     return '';
 }
 
-export {validateEmail, validatePassword}
+function formatDateWithSeconds(date) {
+    return formatDate(date) + `:${date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()}`
+}
+
+function formatDate(date) {
+    return `${date.getMonth()}-${date.getDate()}-${date.getFullYear()} 
+        ${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`
+}
+
+export {validateEmail, validatePassword, formatDateWithSeconds, formatDate}

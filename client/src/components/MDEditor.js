@@ -5,6 +5,7 @@ import MarkdownEditor from "@uiw/react-markdown-editor";
 import './MDEditor.css'
 import {saveFile} from "../utils/fileUtils";
 import socketIOClient from "socket.io-client";
+import {formatDateWithSeconds} from "../utils/utils";
 
 const AUTO_SAVE_INTERVAL = 5000
 
@@ -13,48 +14,71 @@ class MDEditor extends React.Component {
         super(props);
         this.filename = props.doc.filename
         this.markdown = props.doc.content
-        this.lastSave = props.doc.lastEdited
-        this.lastChange = props.doc.lastEdited
+        this.lastChange = new Date(this.props.doc.lastEdited)
+        this.state = {
+            lastSave: new Date(this.props.doc.lastEdited),
+            editAccess: false
+        }
         this.lastAppliedChange = null
         this.init = true
         this.updateMarkdown = this.updateMarkdown.bind(this);
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.autoSave, AUTO_SAVE_INTERVAL)
-        this.lastChange = new Date(this.props.doc.lastEdited)
-        this.lastSave = new Date(this.props.doc.lastEdited)
         this.editor = this.refs.markdownInstance.CodeMirror.editor
         this.editor.doc.setValue(this.props.doc.content)
+        const editAccess = this.props.doc.accessType === 'public-edit' || this.props.userId === this.props.doc.createdBy
+        if (editAccess) {
+            this.setState({editAccess: true})
+            this.interval = setInterval(this.autoSave, AUTO_SAVE_INTERVAL)
+        }
+        this.editor.setOption('readOnly', !editAccess)
         this.initSocket()
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (nextProps.access !== this.props.access) {
+            if (nextProps.doc.accessType === 'controlled') {
+                if (nextProps.access === 'edit') {
+                    this.setState({editAccess: true})
+                    this.editor.setOption('readOnly', false)
+                    if (!this.interval) this.interval = setInterval(this.autoSave, AUTO_SAVE_INTERVAL)
+                } else {
+                    this.editor.setOption('readOnly', true)
+                    if (this.interval) clearInterval(this.interval)
+                }
+            }
+        }
+        return true
     }
 
     initSocket = () => {
         this.socket = socketIOClient('http://localhost:8000', {query: 'fileId=' + this.props.doc._id})
         this.socket.on('msg', (msg) => {
-            console.log(msg)
+            // console.log(msg)
         })
         this.socket.on('change', (delta) => {
             const change = JSON.parse(delta)
-            console.log(change)
             this.lastAppliedChange = delta
             this.editor.doc.replaceRange(change.replacement, change.from, change.to)
         })
     }
 
     autoSave = () => {
-        if (this.lastChange.getTime() > this.lastSave.getTime()) {
+        if (this.lastChange.getTime() > this.state.lastSave.getTime()) {
             saveFile({
                 id: this.props.doc._id,
                 content: this.markdown,
                 filename: this.filename
             }).then(res => {
-                this.lastSave = new Date(res.data.doc.lastEdited)
+                this.setState({
+                    lastSave: new Date(res.data.doc.lastEdited)
+                })
             }).catch(e => {
                 message.error(e)
             })
         } else {
-            console.log("No change")
+            // console.log("No change")
         }
     }
 
@@ -79,11 +103,18 @@ class MDEditor extends React.Component {
     setFilename = (filename) => {
         this.filename = filename
         this.lastChange = new Date()
-        console.log(filename)
     }
 
     componentWillUnmount() {
         clearInterval(this.interval)
+        saveFile({
+            id: this.props.doc._id,
+            content: this.markdown,
+            filename: this.filename
+        }).catch(e => {
+            message.error(e)
+        })
+        this.socket.emit('disconnect', 'disconnect')
         this.socket.disconnect()
     }
 
@@ -97,6 +128,10 @@ class MDEditor extends React.Component {
                             doc={this.props.doc}
                             fetchFile={this.props.fetchFile}/>
                     </div>
+                </Row>
+                <Row className='save-time-access-info'>
+                    <span>Last save: {formatDateWithSeconds(this.state.lastSave)}</span>
+                    <span>{this.state.editAccess ? '' : 'Read only'}</span>
                 </Row>
                 <MarkdownEditor
                     ref='markdownInstance'

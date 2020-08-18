@@ -9,9 +9,17 @@ import cookies from "react-cookies";
 
 let Editor = (props) => {
     if (props.type === 'markdown') {
-        return (<MDEditor id='editor' doc={props.doc} fetchFile={props.fetchFile}/>)
+        return (<MDEditor id='editor'
+                          doc={props.doc}
+                          fetchFile={props.fetchFile}
+                          access={props.access}
+                          userId={props.userId}/>)
     } else {
-        return (<CodeEditor id='editor' doc={props.doc} fetchFile={props.fetchFile}/>)
+        return (<CodeEditor id='editor'
+                            doc={props.doc}
+                            fetchFile={props.fetchFile}
+                            access={props.access}
+                            userId={props.userId}/>)
     }
 }
 
@@ -22,7 +30,6 @@ class EditPage extends React.Component {
         this.state = {
             doc: null
         }
-        console.log(props)
     }
 
     handleUnauthorized = () => {
@@ -32,10 +39,17 @@ class EditPage extends React.Component {
 
     fetchData = () => {
         axiosInstance.get('/api/document/one/' + this.props.match.params.id).then((res) => {
-            console.log(res)
             if (res.data.msg === 'success') {
+                const accessMap = new Map()
+                const doc = res.data.doc
+                for (const [key, value] of Object.entries(doc.access)) {
+                    accessMap.set(key, value)
+                }
+                doc.access = accessMap
+                this.userId = res.data.userId
                 this.setState({
-                    doc: res.data.doc
+                    access: doc.access.get(res.data.userId).access,
+                    doc: res.data.doc,
                 })
             } else if (res.data.msg === 'Unauthorized') {
                 message.error('Unauthorized. Please sign in first.');
@@ -62,7 +76,13 @@ class EditPage extends React.Component {
         if (this.state.doc !== null) {
             return (
                 <div id='edit-page-editor-div'>
-                    <Editor type={this.state.doc.type} doc={this.state.doc} fetchFile={this.fetchData}/>
+                    <Editor
+                        type={this.state.doc.type}
+                        doc={this.state.doc}
+                        fetchFile={this.fetchData}
+                        access={this.state.access}
+                        userId={this.userId}
+                    />
                 </div>
             );
         } else {

@@ -5,3 +5,10 @@
     background-color: rgb(241, 243, 244);
     height: 100%;
 }
+
+.save-time-access-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
