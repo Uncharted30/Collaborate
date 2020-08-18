@@ -29,13 +29,12 @@ let corsOptions = {
 }
 
 let tokenVerifier = (req, res, next) => {
-  console.log(req.originalUrl)
   if (req.originalUrl.startsWith('/api/document')) {
     const token = req.cookies['token']
     try {
       const decoded = jwt.verify(token, publicKey);
       req.userId = decoded.id
-      console.log(req.userId)
+      req.userEmail = decoded.email
     } catch (e) {
       res.send({
         status: 200,

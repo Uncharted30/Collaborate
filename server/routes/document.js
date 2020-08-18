@@ -14,7 +14,7 @@ router.post('/new', (req, res) => {
         type: req.body.type,
         access: {}
     })
-    documentService.createNewDocument(newDocument, req.userId).then((newDocument) => {
+    documentService.createNewDocument(newDocument, req.userId, req.userEmail).then((newDocument) => {
         res.send({
             status: 200,
             msg: 'success',
@@ -23,7 +23,7 @@ router.post('/new', (req, res) => {
     }).catch((e) => {
         res.send({
             status: 200,
-            msg: e
+            msg: e.message
         })
     })
 })
@@ -33,12 +33,13 @@ router.get('/list', (req, res) => {
         res.send({
             status: 200,
             msg: 'success',
-            docs: docInfo
+            docs: docInfo,
+            userId: req.userId
         })
     }).catch(e => {
         res.send({
             status: 200,
-            msg: e
+            msg: e.message
         })
     })
 })
@@ -49,12 +50,13 @@ router.get('/one/:id', (req, res) => {
         res.send({
             status: 200,
             msg: 'success',
-            doc: doc
+            doc: doc,
+            userId: req.userId
         })
     }).catch(e => {
         res.send({
             status: 200,
-            msg: e
+            msg: e.message
         })
     })
 })
@@ -79,7 +81,7 @@ router.put('/', (req, res) => {
     }).catch(e => {
         res.send({
             status: 200,
-            msg: e,
+            msg: e.message
         })
     })
 })
@@ -96,7 +98,7 @@ router.delete('/:id', (req, res) => {
     }).catch(e => {
         res.send({
             status: 200,
-            msg: e
+            msg: e.message
         })
     })
 })
@@ -114,7 +116,62 @@ router.post('/copy', (req, res) => {
     }).catch(e => {
         res.send({
             status: 200,
-            msg: e
+            msg: e.message
+        })
+    })
+})
+
+router.put('/accessType', (req, res) => {
+    const docId = req.body.id
+    const userId = req.userId
+    const newAccessType = req.body.accessType
+
+    documentService.changeAccessType(newAccessType, docId, userId).then(() => {
+        res.send({
+            status: 200,
+            msg: 'success'
+        })
+    }).catch(e => {
+        res.send({
+            status: 200,
+            msg: e.message
+        })
+    })
+})
+
+router.put('/access/add', (req, res) => {
+    const docId = req.body.docId
+    const requestUserId = req.userId
+    const addUserEmail = req.body.userEmail
+    const access = req.body.access
+
+    documentService.addAccess(addUserEmail, docId, requestUserId, access).then(() => {
+        res.send({
+            status: 200,
+            msg: 'success'
+        })
+    }).catch(e => {
+        res.send({
+            status: 200,
+            msg: e.message
+        })
+    })
+})
+
+router.put('/access/remove', (req, res) => {
+    const docId = req.body.docId
+    const requestUserId = req.userId
+    const removeUserId = req.body.userId
+
+    documentService.removeAccess(docId, removeUserId, requestUserId).then(() => {
+        res.send({
+            status: 200,
+            msg: 'success'
+        })
+    }).catch(e => {
+        res.send({
+            status: 200,
+            msg: e.message
         })
     })
 })

@@ -35,13 +35,13 @@ let DocumentSchema = mongoose.Schema({
     },
     accessType: {
         type: String,
-        enum: ['public-edit', 'public-view', 'controlled'],
+        enum: ['public-edit', 'public-read', 'controlled'],
         required: true,
         default: 'controlled'
     },
     access: {
         type: Map,
-        of: String,
+        of: Object,
     }
 });
 

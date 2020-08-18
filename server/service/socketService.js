@@ -25,5 +25,12 @@ module.exports = (io) => {
                 }
             }
         })
+
+        socket.on('disconnect', () => {
+            socket2File.delete(socket.id)
+            const index = socketList.indexOf(socket.id)
+            socketList.splice(index, 1)
+            if (socketList.length === 0) file2SocketList.delete(fileId)
+        })
     })
 }

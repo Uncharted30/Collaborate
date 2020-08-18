@@ -11,7 +11,7 @@ let createUser = async user => {
     user.email = user.email.toLowerCase()
     const dbUser = await User.findOne({email: user.email})
     if (dbUser) {
-        throw "User exists."
+        throw new Error("User exists.")
     } else {
         user.password = await bcrypt.hash(user.password, saltRounds)
         user.save()
@@ -24,44 +24,54 @@ let createUser = async user => {
 }
 
 let updateUser = async (user, token) => {
+    let decoded
     try {
-        jwt.verify(token, publicKey)
+        decoded = jwt.verify(token, publicKey)
     } catch (err) {
-        throw "Unauthorized"
+        throw new Error("Unauthorized")
     }
 
-    const dbUser = await User.findOne({email: user.email})
+    const dbUser = await User.findById(decoded.id)
+    if (!dbUser) throw new Error("User not found.")
+
     if (user.password) {
         dbUser.password = bcrypt.hash(user.password, saltRounds)
     }
-    dbUser.firstName = user.firstName
-    dbUser.lastName = user.lastName
-    dbUser.save()
+    if (user.firstName) dbUser.firstName = user.firstName
+    if (user.lastName) dbUser.lastName = user.lastName
+    await dbUser.save()
 }
 
 let userSignIn = async user => {
     user.email = user.email.toLowerCase()
     const dbUser = await User.findOne({email: user.email})
+    if (!dbUser) {
+        throw new Error("Incorrect email or password.")
+    }
     const res = await bcrypt.compare(user.password, dbUser.password)
     if (res) {
-        let token = jwt.sign({
+        const token = jwt.sign({
             email: dbUser.email,
             id: dbUser._id
         }, privateKey, {algorithm: 'RS256', expiresIn: '30d'})
         return token
     } else {
-        throw "Incorrect email or password."
+        throw new Error("Incorrect email or password.")
     }
 }
 
 let getUserInfo = async token => {
+    let decoded
     try {
-        let decoded = jwt.verify(token, publicKey)
-        return await User.findById({
-            email: decoded.id
-        })
+        decoded = jwt.verify(token, publicKey)
     } catch {
-        throw "Unauthorized"
+        throw new Error("Unauthorized")
+    }
+    const user =  await User.findById({
+        email: decoded.id
+    })
+    if (!user) {
+        throw new Error("User not found.")
     }
 }
 
@@ -69,5 +79,5 @@ module.exports = {
     createUser: createUser,
     updateUser: updateUser,
     userSignIn: userSignIn,
-    getUserInfo: getUserInfo
+    getUserInfo: getUserInfo,
 }

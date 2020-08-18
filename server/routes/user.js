@@ -24,7 +24,7 @@ router.post('/new', function(req, res) {
   }, (err) => {
     res.send({
       status: 200,
-      msg: err
+      msg: err.message
     })
   })
 });
@@ -43,7 +43,7 @@ router.post('/sign_in', function (req, res) {
   }).catch((err) => {
     res.send({
       status: 200,
-      msg:err
+      msg:err.message
     })
   })
 });
@@ -65,7 +65,25 @@ router.put('/', function (req, res) {
   }).catch((err) => {
     res.status(400).send({
       status: 400,
-      msg: err
+      msg: err.message
+    })
+  })
+})
+
+router.post('/emails', (req, res) => {
+  let users = req.body.users
+  let token = req.cookies['token']
+
+  userService.getUserEmails(users, token).then(emails => {
+    res.send({
+      status: 200,
+      msg: 'success',
+      emails: emails
+    })
+  }).catch(e => {
+    res.send({
+      status: 200,
+      msg: e.message
     })
   })
 })
