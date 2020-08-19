@@ -50,35 +50,34 @@ router.post('/sign_in', function (req, res) {
 
 router.put('/', function (req, res) {
   user = new User({
-    email: req.body.email,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     password: req.body.password
   })
 
   let token = req.cookies['token']
+  if (!token) token = req.headers['token']
   userService.updateUser(user, token).then(() => {
     res.status(200).send({
       status: 200,
       msg: 'success'
     })
   }).catch((err) => {
-    res.status(400).send({
-      status: 400,
+    res.send({
+      status: 200,
       msg: err.message
     })
   })
 })
 
-router.post('/emails', (req, res) => {
-  let users = req.body.users
+router.get('/', (req, res) => {
   let token = req.cookies['token']
-
-  userService.getUserEmails(users, token).then(emails => {
+  if (!token) token = req.headers['token']
+  userService.getUserInfo(token).then(user => {
     res.send({
       status: 200,
       msg: 'success',
-      emails: emails
+      user: user
     })
   }).catch(e => {
     res.send({

@@ -34,11 +34,11 @@ let updateUser = async (user, token) => {
     const dbUser = await User.findById(decoded.id)
     if (!dbUser) throw new Error("User not found.")
 
-    if (user.password) {
-        dbUser.password = bcrypt.hash(user.password, saltRounds)
+    if (user.password !== '') {
+        dbUser.password = await bcrypt.hash(user.password, saltRounds)
     }
-    if (user.firstName) dbUser.firstName = user.firstName
-    if (user.lastName) dbUser.lastName = user.lastName
+    if (user.firstName !== '') dbUser.firstName = user.firstName
+    if (user.lastName !== '') dbUser.lastName = user.lastName
     await dbUser.save()
 }
 
@@ -67,12 +67,12 @@ let getUserInfo = async token => {
     } catch {
         throw new Error("Unauthorized")
     }
-    const user =  await User.findById({
-        email: decoded.id
-    })
+    const user =  await User.findById(decoded.id)
     if (!user) {
         throw new Error("User not found.")
     }
+    user.password = null
+    return user
 }
 
 module.exports = {

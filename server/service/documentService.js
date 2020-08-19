@@ -57,15 +57,18 @@ const getDocumentsByUser = async userId => {
 const getDocumentById = async (docId, userId) => {
     const doc = await Document.findById(docId)
     if (!doc) throw new Error("File not found.")
+    const user = await User.findById(userId)
+    if (!user) {
+        throw new Error("User nor found.")
+    }
+
     if (doc.accessType.startsWith('public')) {
+        user.files.set(doc._id.toString(), new Date())
+        await user.save()
         return doc
     } else {
         const access = doc.access.get(userId)
         if (access) {
-            const user = await User.findById(userId)
-            if (!user) {
-                throw new Error("User nor found.")
-            }
             user.files.set(doc._id.toString(), new Date())
             await user.save()
             return doc

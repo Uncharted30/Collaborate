@@ -56,7 +56,7 @@ app.use('/api/document', documentRouter);
 
 const server = http.createServer(app)
 const socketService = require('./service/socketService')(io)
-io.attach(server)
+io.attach(server, {cookie: false})
 
 server.listen(8000, function () {
   console.log('App listening on port 8000!')
