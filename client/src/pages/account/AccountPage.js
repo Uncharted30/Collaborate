@@ -1,38 +1,133 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import './AccountPage.css'
-import {Card} from "antd";
+import {Card, message} from "antd";
+import {axiosInstance as axios} from "../../utils/axios";
+import cookies from "react-cookies";
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    form: {
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
 
-export default function AccountPage(props) {
-    const classes = useStyles();
-    return (
-        <div id='account-page-container'>
-            <Card className={classes.root} id="account-setting-card" variant="outlined" title='Account Settings'>
+class AccountPage extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            firstName: 'First Name',
+            lastName: 'Last Name',
+            password: '',
+            firstNameError: '',
+            lastNameError: '',
+            passwordError: ''
+        }
+    }
+
+    fetchUserInfo = () => {
+        axios.get('/api/user').then(res => {
+            if (res.data.msg === 'success') {
+                this.setState({
+                    email: res.data.user.email,
+                    firstName: res.data.user.firstName,
+                    lastName: res.data.user.lastName
+                })
+                this.user = res.data.user
+            } else if (res.data.msg === 'Unauthorized') {
+                cookies.remove('token')
+                this.props.history.push('/')
+            } else {
+                message.error(res.data.msg)
+            }
+        }).catch(e => {
+            console.log(e)
+            message.error(e)
+        })
+    }
+
+    handleUpdate = (e) => {
+        e.preventDefault()
+        if (this.state.firstNameError !== ''
+            || this.state.lastNameError !== '') {
+            message.error("First name and last name could not be empty.")
+            return
+        }
+        if (this.state.password !== '' && (this.state.password.length < 8 || this.state.password.length > 24)) {
+            this.setState({
+                passwordError: 'Password should be 8-24 characters long.'
+            })
+            return
+        }
+
+        const data = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            password: this.state.password
+        }
+        console.log(data)
+        axios.put('/api/user', data).then(res => {
+            console.log(res)
+            if (res.data.msg === 'success') {
+                message.success('Success')
+            } else if (res.data.msg === 'Unauthorized') {
+                cookies.remove('token')
+                this.props.history.push('/')
+            } else {
+                message.error(res.data.msg)
+            }
+        }).catch(e => {
+            message.error(e.message)
+        })
+    }
+
+
+    componentDidMount() {
+        this.fetchUserInfo()
+    }
+
+
+    onFirstNameBlur = (e) => {
+        this.setState({
+            firstNameError: e.target.value === '' ? 'First name could not be empty.' : ''
+        })
+    }
+
+    onLastNameBlur = (e) => {
+        this.setState({
+            lastNameError: e.target.value === '' ? 'Last name could not be empty.' : ''
+        })
+    }
+
+    onPasswordChange = (e) => {
+        this.setState({
+            password: e.target.value
+        })
+    }
+
+    onFirstNameChange = (e) => {
+        this.setState({
+            firstName: e.target.value
+        })
+    }
+
+    onLastNameChange = (e) => {
+        this.setState({
+            lastName: e.target.value
+        })
+    }
+
+    render() {
+        return (
+            <div id='account-page-container'>
+                <Card id="account-setting-card" variant="outlined" title='Account Settings'>
                     <Container component="main" maxWidth="xs">
                         <CssBaseline/>
-                        <div className={classes.paper + ' account-setting-form'}>
-                            <form className={classes.form} noValidate>
+                        <div className='account-setting-form'>
+                            <form className='user-info-update-form' noValidate onSubmit={this.handleUpdate}>
                                 <TextField
                                     variant="outlined"
                                     margin="dense"
+                                    required
                                     fullWidth
                                     id="email"
                                     label="Email Address"
@@ -40,27 +135,38 @@ export default function AccountPage(props) {
                                     autoComplete="email"
                                     size='small'
                                     disabled
-                                    value='abc@123.com'
+                                    value={this.state.email}
                                 />
                                 <TextField
                                     variant="outlined"
                                     margin="dense"
                                     required
                                     fullWidth
-                                    id="first-name"
+                                    id="firstName"
                                     label="First Name"
-                                    name="first-name"
+                                    name="firstName"
                                     autoFocus
                                     size='small'
+                                    onBlur={this.onFirstNameBlur}
+                                    error={this.state.firstNameError !== ''}
+                                    helperText={this.state.firstNameError}
+                                    onChange={this.onFirstNameChange}
+                                    value={this.state.firstName}
                                 />
                                 <TextField
                                     variant="outlined"
                                     margin="dense"
+                                    required
                                     fullWidth
-                                    id="last-name"
+                                    id="lastName"
                                     label="Last Name"
-                                    name="last-name"
+                                    name="lastName"
                                     size='small'
+                                    onBlur={this.onLastNameBlur}
+                                    error={this.state.lastNameError !== ''}
+                                    helperText={this.state.lastNameError}
+                                    onChange={this.onLastNameChange}
+                                    value={this.state.lastName}
                                 />
                                 <TextField
                                     variant="outlined"
@@ -72,20 +178,25 @@ export default function AccountPage(props) {
                                     id="password"
                                     autoComplete="current-password"
                                     size='small'
+                                    onChange={this.onPasswordChange}
+                                    value={this.state.password}
                                 />
                                 <Button
                                     type="submit"
                                     fullWidth
                                     variant="contained"
                                     color="primary"
-                                    className={classes.submit}
+                                    className='update-submit-button'
                                 >
                                     Update
                                 </Button>
                             </form>
                         </div>
                     </Container>
-            </Card>
-        </div>
-    )
+                </Card>
+            </div>
+        )
+    }
 }
+
+export default AccountPage

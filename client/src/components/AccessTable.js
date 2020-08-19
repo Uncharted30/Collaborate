@@ -59,7 +59,6 @@ class AccessTable extends React.Component {
                 data.push(value)
             }
         })
-        console.log(data)
         this.setState({
             data: data
         })

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -105,14 +105,14 @@ export default function NavBar() {
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
             id={menuId}
             keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <Link to='/account'><MenuItem>My account</MenuItem></Link>
             <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
         </Menu>
     );
@@ -121,23 +121,15 @@ export default function NavBar() {
     const renderMobileMenu = (
         <Menu
             anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
             id={mobileMenuId}
             keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-            </MenuItem>
+            <Link to='/account'><MenuItem>My account</MenuItem></Link>
+            <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
         </Menu>
     );
 
@@ -148,17 +140,17 @@ export default function NavBar() {
                     <Link to='/files' className='logo-link'><img src={appBarLogo} alt="logo" id='app-bar-logo'/></Link>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <SearchIcon />
+                            <SearchIcon/>
                         </div>
                         <InputBase
                             placeholder="Search"
                             classes={{
                                 input: classes.inputInput,
                             }}
-                            inputProps={{ 'aria-label': 'search' }}
+                            inputProps={{'aria-label': 'search'}}
                         />
                     </div>
-                    <div className={classes.grow} />
+                    <div className={classes.grow}/>
                     <div className={classes.sectionDesktop}>
                         <IconButton
                             edge="end"
@@ -167,7 +159,7 @@ export default function NavBar() {
                             aria-haspopup="true"
                             onClick={handleProfileMenuOpen}
                         >
-                            <AccountCircle fontSize="large" />
+                            <AccountCircle fontSize="large"/>
                         </IconButton>
                     </div>
                     <div className={classes.sectionMobile}>
@@ -178,7 +170,7 @@ export default function NavBar() {
                             onClick={handleMobileMenuOpen}
                             color="inherit"
                         >
-                            <MoreIcon />
+                            <MoreIcon/>
                         </IconButton>
                     </div>
                 </Toolbar>

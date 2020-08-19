@@ -4,6 +4,15 @@
     justify-content: center;
 }
 
+.user-info-update-form {
+    margin-top: 8px;
+}
+
+.update-submit-button {
+    margin-top: 24px !important;
+    margin-bottom: 12px !important;
+}
+
 @media screen and (min-width: 1201px) {
     #account-setting-card {width: 60%}
 }
