@@ -11,7 +11,7 @@ const saveFile = (data) => {
                 reject('Error saving file. ' + res.data.msg)
             }
         }).catch(e => {
-            reject('Error saving file. ' + e)
+            reject('Error saving file. ' + e.message)
         })
     })
 }
@@ -25,23 +25,42 @@ const deleteFile = (id, fetchData) => {
             message.error('Error deleting file. ' + res.data.msg)
         }
     }).catch(e => {
-        message.error("Error deleting file. " + e)
+        message.error("Error deleting file. " + e.message)
     })
 }
 
 const makeCopy = (docId) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/document/copy',
-            {id: docId}).then(res => {
+        axios.post('/api/document/copy', {id: docId}).then(res => {
+            if (res.data.msg === 'success') {
                 resolve(res.data.id)
+            } else {
+                reject(res.data.msg)
+            }
         }).catch(e => {
-            reject(e)
+            reject(e.message)
         })
     })
+}
+
+const createNewFile = (type, history) => {
+    axios.post('/api/document/new', {
+        type: type
+    }).then(res => {
+        if (res.data.msg === 'success') {
+            history.push('/empty')
+            history.replace('/edit/' + res.data.id);
+        } else {
+            message.error(res.data.msg)
+        }
+    }).catch(e => {
+        message.error('Error creating new file. ' + e.message)
+    });
 }
 
 export {
     saveFile,
     deleteFile,
-    makeCopy
+    makeCopy,
+    createNewFile
 }

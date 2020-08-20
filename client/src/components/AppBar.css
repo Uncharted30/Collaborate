@@ -16,3 +16,14 @@
     display: flex;
     justify-content: space-between;
 }
+
+.hidden-element {
+    display: none;
+}
+
+#save-time-message {
+    color: rgb(100, 100, 100);
+    margin-bottom: 0;
+    margin-right: 20px;
+    font-weight: 400;
+}

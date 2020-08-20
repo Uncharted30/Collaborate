@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="74.166 -64.224 298.147 303.957" xmlns="http://www.w3.org/2000/svg">
+  <g transform="matrix(1, 0, 0, 1, -1218.051758, -473.637756)">
+    <title>background</title>
+  </g>
+  <g transform="matrix(1, 0, 0, 1, 92.908226, -93.451111)">
+    <title>Layer 1</title>
+    <ellipse stroke="#000" ry="29" rx="29" id="svg_2" cy="66.325" cx="245.385" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_5" cy="124.354" cx="245.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_6" cy="182.354" cx="245.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="11" rx="11" id="svg_7" cy="240.325" cx="245.856" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="11" rx="11" id="svg_8" cy="298.325" cx="245.856" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="29" rx="29" id="svg_10" cy="124.383" cx="187.385" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_11" cy="182.354" cx="187.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="11" rx="11" id="svg_12" cy="298.325" cx="187.856" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_13" cy="66.354" cx="187.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_14" cy="240.354" cx="187.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="29" rx="29" id="svg_15" cy="181.854" cx="129.385" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_16" cy="240.354" cx="129.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_17" cy="298.354" cx="129.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_18" cy="124.354" cx="129.885" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_19" cy="66.354" cx="129.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="29" rx="29" id="svg_23" cy="240.383" cx="71.385" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_24" cy="182.354" cx="71.885" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="11" rx="11" id="svg_25" cy="66.325" cx="71.327" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_26" cy="124.354" cx="71.885" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_27" cy="298.354" cx="71.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="29" rx="29" id="svg_28" cy="298.325" cx="13.385" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_29" cy="182.354" cx="13.356" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="11" rx="11" id="svg_30" cy="66.325" cx="13.385" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="11" rx="11" id="svg_31" cy="124.383" cx="13.385" stroke-width="0" fill="#ffa358"/>
+    <ellipse stroke="#000" ry="19.5" rx="19.5" id="svg_33" cy="240.354" cx="13.356" stroke-width="0" fill="#ffa358"/>
+  </g>
+</svg>

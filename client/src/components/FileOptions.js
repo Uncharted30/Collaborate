@@ -4,6 +4,10 @@ import './FileOptions.css'
 import {Divider} from "@material-ui/core";
 import AccessTable from "./AccessTable";
 import {axiosInstance as axios} from "../utils/axios";
+import {connect} from 'react-redux'
+import {setOpenModalFunction} from "../actions";
+import {createNewFile, makeCopy} from "../utils/fileUtils";
+import {withRouter} from 'react-router-dom'
 
 const {SubMenu} = Menu;
 const {Option} = Select;
@@ -143,24 +147,38 @@ class FileOptions extends React.Component {
         })
     }
 
+    onCreate = (type) => {
+        createNewFile(type, this.props.history)
+    }
+
+    onMakeCopy = () => {
+        makeCopy(this.props.doc._id).then(newFileId => {
+            this.props.history.push('/empty')
+            this.props.history.replace('/edit/' + newFileId)
+        }).catch(e => {
+            message.error(e.message)
+        })
+    }
+
+    componentDidMount() {
+        this.props.setOpenModalFunction(this.openModal, this.props.doc._id)
+    }
+
     menu = (
         <Menu className='file-option-menu'>
             <Menu.Item onClick={this.openModal}>
                 Share
             </Menu.Item>
             <SubMenu title="New...">
-                <Menu.Item>
+                <Menu.Item onClick={() => {this.onCreate('markdown')}}>
                     Markdown file
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item onClick={() => {this.onCreate('code')}}>
                     Source code file
                 </Menu.Item>
             </SubMenu>
-            <Menu.Item>
+            <Menu.Item onClick={this.onMakeCopy}>
                 Make a copy
-            </Menu.Item>
-            <Menu.Item>
-                Download
             </Menu.Item>
         </Menu>
     )
@@ -195,4 +213,4 @@ class FileOptions extends React.Component {
     }
 }
 
-export default FileOptions
+export default connect(null, {setOpenModalFunction})(withRouter(FileOptions))

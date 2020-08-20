@@ -5,7 +5,8 @@ import FileCard from "../../components/FileCard"
 import RecentFileCard from "../../components/RecentFileCard";
 import {withRouter} from "react-router-dom";
 import {axiosInstance as axios} from "../../utils/axios";
-import cookies from "react-cookies";
+import cookies from "react-cookies"
+import {connect} from 'react-redux'
 
 class FilesPage extends React.Component {
 
@@ -83,6 +84,12 @@ class FilesPage extends React.Component {
         } else if (this.state.filter === 'shared' && file.createdBy === this.userId) {
             return false
         }
+
+        if (this.props.keyword !== '') {
+            const filename = file.filename.toLowerCase()
+            return filename.indexOf(this.props.keyword) > -1
+        }
+
         return true
     }
 
@@ -146,4 +153,10 @@ class FilesPage extends React.Component {
     }
 }
 
-export default withRouter(FilesPage)
+const mapStateToProps = (state) => {
+    return {
+        keyword: state.keyword
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(FilesPage))

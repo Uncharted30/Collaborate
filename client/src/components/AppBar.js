@@ -3,7 +3,6 @@ import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -12,7 +11,11 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import './AppBar.css'
 import appBarLogo from '../assets/img/app_bar_logo.svg'
 import cookies from "react-cookies"
-import {Link, useHistory} from 'react-router-dom'
+import {Link, useHistory, useLocation} from 'react-router-dom'
+import {Button} from "antd";
+import {setSearchKeyWord} from "../actions";
+import {connect} from 'react-redux'
+import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -59,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
         [theme.breakpoints.up('md')]: {
             display: 'flex',
+            alignItems: 'center'
         },
     },
     sectionMobile: {
@@ -70,9 +74,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NavBar() {
+function NavBar(props) {
     const classes = useStyles();
-    const history = useHistory()
+    const history = useHistory();
+    const location = useLocation();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -133,6 +138,30 @@ export default function NavBar() {
         </Menu>
     );
 
+    let pathname = location.pathname
+    if (pathname.endsWith('/')) pathname = pathname.substring(0, pathname.length - 1)
+
+    let page
+    if (pathname.indexOf('files') > -1) {
+        page = 'files'
+    } else if (pathname.indexOf('edit') > -1) {
+        page = 'edit'
+    } else if (pathname.indexOf('account') > -1) {
+        page = 'account'
+    }
+
+    const onClickShare = () => {
+        const split = pathname.split('/')
+        const fileId = split[split.length - 1]
+        props.openModalFunctions.get(fileId)()
+    }
+
+    console.log(location.pathname.split('/'))
+
+    const onSearchBarChange = (e) => {
+        props.setSearchKeyWord(e.target.value)
+    }
+
     return (
         <div>
             <AppBar position="fixed" id="app-bar" style={{zIndex: 10}}>
@@ -147,11 +176,19 @@ export default function NavBar() {
                             classes={{
                                 input: classes.inputInput,
                             }}
-                            inputProps={{'aria-label': 'search'}}
+                            className={page === 'files' ? '' : 'hidden-element'}
+                            onChange={onSearchBarChange}
                         />
                     </div>
                     <div className={classes.grow}/>
                     <div className={classes.sectionDesktop}>
+                        <Button
+                            type='primary'
+                            style={{marginRight: 20}}
+                            className={page === 'edit' ? '' : 'hidden-element'}
+                            onClick={onClickShare}>
+                            Share
+                        </Button>
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
@@ -180,3 +217,11 @@ export default function NavBar() {
         </div>
     );
 }
+
+const mapStateToProps = state => {
+    return {
+        openModalFunctions: state.openModalFunctions,
+    }
+}
+
+export default connect(mapStateToProps, {setSearchKeyWord})(NavBar)
