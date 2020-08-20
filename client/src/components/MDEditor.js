@@ -6,6 +6,8 @@ import './MDEditor.css'
 import {saveFile} from "../utils/fileUtils";
 import socketIOClient from "socket.io-client";
 import {formatDateWithSeconds} from "../utils/utils";
+import {connect} from 'react-redux';
+import {setCleanupFunction} from "../actions";
 
 const AUTO_SAVE_INTERVAL = 5000
 
@@ -34,6 +36,7 @@ class MDEditor extends React.Component {
         }
         this.editor.setOption('readOnly', !editAccess)
         this.initSocket()
+        this.props.setCleanupFunction(this.cleanup)
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -105,17 +108,24 @@ class MDEditor extends React.Component {
         this.lastChange = new Date()
     }
 
-    componentWillUnmount() {
+    cleanup = async () => {
         clearInterval(this.interval)
-        saveFile({
+        console.log('clear interval')
+        if (this.state.editAccess) await saveFile({
             id: this.props.doc._id,
             content: this.markdown,
             filename: this.filename
         }).catch(e => {
             message.error(e)
         })
+        this.props.setCleanupFunction(async () => {})
         this.socket.emit('disconnect', 'disconnect')
         this.socket.disconnect()
+        this.cleaned = true
+    }
+
+    componentWillUnmount() {
+        if (!this.cleaned) this.cleanup()
     }
 
     render() {
@@ -143,4 +153,4 @@ class MDEditor extends React.Component {
     }
 }
 
-export default MDEditor
+export default connect(null, {setCleanupFunction})(MDEditor)

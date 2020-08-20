@@ -59,7 +59,7 @@ export default function SignUp(props) {
 
     const onLastNameBlur = (e) => {
         if (e.target.value === '') setLastNameError('Last name could not br empty.');
-        else setFirstNameError('')
+        else setLastNameError('')
     }
 
     const handleSignUp = (e) => {

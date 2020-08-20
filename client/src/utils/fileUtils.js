@@ -8,7 +8,7 @@ const saveFile = (data) => {
                 // console.log(res.data.doc.lastEdited)
                 resolve(res)
             } else {
-                reject('Error saving file. ' + res.data.msg)
+                reject(res.data.msg)
             }
         }).catch(e => {
             reject('Error saving file. ' + e.message)

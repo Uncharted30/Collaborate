@@ -8,27 +8,25 @@ import AccountPage from "./pages/account/AccountPage";
 import EditPage from "./pages/edit/EditPage";
 
 function App() {
-  return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path='/'>
-            <LandingPage/>
-          </Route>
-          <Route path='/'>
-              <MenuAppBar/>
-              <Route exact path='/files'>
-                <FilesPage/>
-              </Route>
-              <Route exact path='/edit/:id' render={(props) => <EditPage {...props}/>}>
-
-              </Route>
-              <Route exact path='/account'>
-                <AccountPage/>
-              </Route>
-          </Route>
-        </Switch>
-      </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route exact path='/'>
+                    <LandingPage/>
+                </Route>
+                <Route path='/'>
+                    <MenuAppBar/>
+                    <Route exact path='/files'>
+                        <FilesPage/>
+                    </Route>
+                    <Route exact path='/edit/:id' render={(props) => <EditPage {...props}/>}/>
+                    <Route exact path='/account'>
+                        <AccountPage/>
+                    </Route>
+                </Route>
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
 export default App;

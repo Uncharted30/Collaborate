@@ -8,15 +8,24 @@ const searchKeyWordReducer = (keyword = '', action) => {
     return keyword
 }
 
-const openModalFunctionsReducer = (openModalFunctions = new Map(), action) => {
+const openModalFunctionReducer = (openModalFunction = () => {}, action) => {
     if (action.type === 'SET_OPEN_MODAL') {
-        openModalFunctions.set(action.fileId, action.openModal)
+        return action.openModal
     }
 
-    return openModalFunctions
+    return openModalFunction
+}
+
+const cleanupReducer = (cleanup = async () => {}, action) => {
+    if (action.type === 'SET_CLEANUP') {
+        return action.cleanup
+    }
+
+    return cleanup
 }
 
 export default combineReducers({
     keyword: searchKeyWordReducer,
-    openModalFunctions: openModalFunctionsReducer
+    openModalFunction: openModalFunctionReducer,
+    cleanup: cleanupReducer
 })

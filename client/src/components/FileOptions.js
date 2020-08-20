@@ -161,7 +161,7 @@ class FileOptions extends React.Component {
     }
 
     componentDidMount() {
-        this.props.setOpenModalFunction(this.openModal, this.props.doc._id)
+        this.props.setOpenModalFunction(this.openModal)
     }
 
     menu = (

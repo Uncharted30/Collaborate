@@ -23,6 +23,8 @@ import FileOptions from "./FileOptions";
 import socketIOClient from "socket.io-client";
 import {saveFile} from "../utils/fileUtils";
 import {formatDateWithSeconds} from "../utils/utils";
+import {connect} from 'react-redux';
+import {setCleanupFunction} from "../actions";
 
 const AUTO_SAVE_INTERVAL = 5000
 
@@ -97,19 +99,26 @@ class CodeEditor extends React.Component {
                 this.socket.emit('change', JSON.stringify(e))
             }
         })
+        this.props.setCleanupFunction(this.cleanup)
     }
 
-    componentWillUnmount() {
-        if (this.state.editAccess) saveFile({
+    cleanup = async () => {
+        clearInterval(this.interval)
+        if (this.state.editAccess) await saveFile({
             id: this.props.doc._id,
             content: this.content,
             filename: this.filename
         }).catch(e => {
             message.error(e)
         })
-        if (this.interval) clearInterval(this.interval)
         this.socket.emit('disconnect', 'disconnect')
         this.socket.disconnect()
+        this.cleaned = true
+        this.props.setCleanupFunction(async () => {})
+    }
+
+    componentWillUnmount() {
+        if (!this.cleaned) this.cleanup()
     }
 
     autoSave = () => {
@@ -172,4 +181,4 @@ class CodeEditor extends React.Component {
     }
 }
 
-export default CodeEditor
+export default connect(null, {setCleanupFunction})(CodeEditor)

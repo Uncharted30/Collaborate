@@ -6,12 +6,18 @@ const setSearchKeyWord = keyword => {
     }
 }
 
-const setOpenModalFunction = (openModal, fileId) => {
+const setOpenModalFunction = (openModal) => {
     return {
         type: 'SET_OPEN_MODAL',
         openModal: openModal,
-        fileId: fileId
     }
 }
 
-export {setSearchKeyWord, setOpenModalFunction}
+const setCleanupFunction = cleanup => {
+    return {
+        type: 'SET_CLEANUP',
+        cleanup: cleanup
+    }
+}
+
+export {setSearchKeyWord, setOpenModalFunction, setCleanupFunction}

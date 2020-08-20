@@ -103,8 +103,10 @@ function NavBar(props) {
 
     const menuId = 'primary-search-account-menu';
     const handleSignOut = () => {
-        cookies.remove('token')
-        history.push('/')
+        props.cleanup().then().catch().then(() => {
+            cookies.remove('token')
+            history.push('/')
+        })
     }
 
     const renderMenu = (
@@ -138,8 +140,7 @@ function NavBar(props) {
         </Menu>
     );
 
-    let pathname = location.pathname
-    if (pathname.endsWith('/')) pathname = pathname.substring(0, pathname.length - 1)
+    const pathname = location.pathname
 
     let page
     if (pathname.indexOf('files') > -1) {
@@ -151,12 +152,8 @@ function NavBar(props) {
     }
 
     const onClickShare = () => {
-        const split = pathname.split('/')
-        const fileId = split[split.length - 1]
-        props.openModalFunctions.get(fileId)()
+        props.openModalFunction()
     }
-
-    console.log(location.pathname.split('/'))
 
     const onSearchBarChange = (e) => {
         props.setSearchKeyWord(e.target.value)
@@ -220,7 +217,8 @@ function NavBar(props) {
 
 const mapStateToProps = state => {
     return {
-        openModalFunctions: state.openModalFunctions,
+        openModalFunction: state.openModalFunction,
+        cleanup: state.cleanup
     }
 }
 
