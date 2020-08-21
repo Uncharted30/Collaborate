@@ -40,8 +40,7 @@ class AccountPage extends React.Component {
                 message.error(res.data.msg)
             }
         }).catch(e => {
-            console.log(e)
-            message.error(e)
+            message.error(e.message)
         })
     }
 

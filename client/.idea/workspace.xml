@@ -22,17 +22,11 @@
     <list default="true" id="9339cfca-473b-4ffe-a2b9-fac93a4f4beb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/CodeEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CodeEditor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/FileOptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FileOptions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/MDEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MDEditor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SignUpBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SignUpBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/fileUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/fileUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/account/AccountPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/account/AccountPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

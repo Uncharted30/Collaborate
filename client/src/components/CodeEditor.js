@@ -151,7 +151,8 @@ class CodeEditor extends React.Component {
                         <FileOptions
                             setFilename={this.setFilename}
                             doc={this.props.doc}
-                            fetchFile={this.props.fetchFile}/>
+                            fetchFile={this.props.fetchFile}
+                            userId={this.props.userId}/>
                     </div>
                     <div className='editor-info-div'>
                         <ThemeSelector changeTheme={this.changeTheme}/>

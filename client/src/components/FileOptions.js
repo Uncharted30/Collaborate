@@ -112,6 +112,9 @@ const PublicAccessInfo = (props) => {
 }
 
 const AccessInfo = (props) => {
+    if (props.userId !== props.doc.createdBy) {
+        return (<p>Sorry. Only the creator of this file can change permissions.</p>)
+    }
     if (props.doc.accessType === 'controlled') {
         return <PrivateAccessInfo doc={props.doc} fetchFile={props.fetchFile}/>
     } else {

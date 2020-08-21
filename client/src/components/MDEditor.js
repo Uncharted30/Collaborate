@@ -29,7 +29,15 @@ class MDEditor extends React.Component {
     componentDidMount() {
         this.editor = this.refs.markdownInstance.CodeMirror.editor
         this.editor.doc.setValue(this.props.doc.content)
-        const editAccess = this.props.doc.accessType === 'public-edit' || this.props.userId === this.props.doc.createdBy
+        let editAccess = false
+        if (this.props.doc.accessType === 'public-edit') {
+            editAccess = true
+        } else if (this.props.doc.accessType === 'public-read') {
+            if (this.props.userId === this.props.doc.createdBy) editAccess = true
+        } else if (this.props.access === 'edit') {
+            editAccess = true
+        }
+
         if (editAccess) {
             this.setState({editAccess: true})
             this.interval = setInterval(this.autoSave, AUTO_SAVE_INTERVAL)
@@ -136,7 +144,8 @@ class MDEditor extends React.Component {
                         <FileOptions
                             setFilename={this.setFilename}
                             doc={this.props.doc}
-                            fetchFile={this.props.fetchFile}/>
+                            fetchFile={this.props.fetchFile}
+                            userId={this.props.userId}/>
                     </div>
                 </Row>
                 <Row className='save-time-access-info'>
